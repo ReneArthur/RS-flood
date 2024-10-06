@@ -33,7 +33,7 @@
         width: 400px;
         height: 550px;
         z-index: 999;
-        border-radius: 20px;
+        border-radius: 20px 0px;
         transition: transform 0.2s ease-in-out;
     }
 
@@ -112,11 +112,17 @@
         }
 
     @media screen and (max-width: 920px) {
+        main {
+            margin-top: 0px!important;
+        }
+        #map{
+            height: 100vh;
+        }
         #modal {
             width: 100%;
             height: 100%;
             left: 0;
-            top: 520px;
+            top:90vh;
             bottom: -300px;
             border-radius: 20px 20px 0 0;
             transform: translateY(-0px);
@@ -130,6 +136,15 @@
         #modal > a {
             top: 20px;
             font-size: 20px;
+        }
+
+        #optionsModal{
+            position: absolute;
+            display: flex;
+            gap: 18px;
+            left: 0%;
+            top: -35%;
+            z-index: 999;
         }
 
         #modal .modal-categories {
@@ -178,6 +193,10 @@
             top: 16px!important;
         }
 
+        .invisible-mobile{
+            display: none!important;
+        }
+
         .modal-content--images{
             margin-top: 80px;
         }
@@ -197,16 +216,19 @@
     }
 
     @media screen and (max-width: 580px) {
-        #map{
-            height: 450px;
-        }
-
-        #modal{
-            top: 370px;
-        }
-
         #modal-title-mobile{
             font-size: 18px!important;
+        }
+
+        #optionsModal{
+            left: -15%;
+            top: -30%;
+            z-index: 999;
+            transform: scale(0.8);
+        }
+
+        #modal.open {
+            transform: translateY(-300px);
         }
 
         .backToCities{
@@ -286,12 +308,6 @@ img {vertical-align: middle;}
   background-color: #717171;
 }
 
-/* Fading animation */
-.fade {
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
 @keyframes fade {
   from {opacity: .4} 
   to {opacity: 1}
@@ -312,7 +328,7 @@ img {vertical-align: middle;}
 
     <main>
         <div id="modal">
-            <div id="optionsModal" class="invisible">
+            <div id="optionsModal" class="invisible invisible-mobile">
                 <div><img src="./img/note-text-svgrepo-com.svg" style="width: 20px;height: 20px;">Stories</div>
                 <div><img src="./img/map-location-pin-svgrepo-com.svg" style="width: 20px;height: 20px;">Geography</div>
             </div>
@@ -445,7 +461,7 @@ img {vertical-align: middle;}
 
             getCity.images.forEach((imageSrc) => {
                 const slideDiv = `
-                    <div class="mySlides fade">
+                    <div class="mySlides">
                     <img src="${imageSrc}" style="width:100%; height:100%">
                     </div>
                 `;
@@ -469,7 +485,12 @@ img {vertical-align: middle;}
             const modal = document.getElementById('modal');
             if(modal.classList.contains('open') || toBack){
                 modal.classList.remove('open');
+                    document.getElementById('optionsModal').classList.add('invisible-mobile')
             }else{
+                setTimeout(()=>{
+                    document.getElementById('optionsModal').classList.remove('invisible-mobile')
+                },200)
+
                 modal.classList.add('open');
             }
         }
