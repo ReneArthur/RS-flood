@@ -15,7 +15,6 @@
     }
 
     main {
-        background-color: #06193d;
         border-radius: 12px;
         padding: 40px;
         margin-top: 120px;
@@ -64,6 +63,8 @@
         font-size: 22px;
         text-align: center;
         cursor: pointer;
+        flex: 0 0 auto;
+        white-space: nowrap;
     }
 
     .invisible {
@@ -173,10 +174,10 @@
 <body>
     <nav>
         <a href="index.html">Flood impact</a>
-        <a href="map.html">Map</a>
-        <a>Before and after</a>
-        <a>Stories</a>
+        <a href="map.html" style="font-weight: bold;">Map</a>
+        <a href="before.html">Before and after</a>
     </nav>
+
     <main>
         <div id="modal">
             <div class="drag-bar invisible"></div>

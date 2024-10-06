@@ -1,6 +1,7 @@
 *{
     padding: 0px;
     margin: 0px;
+    font-family: sans-serif;
 }
 #map {
     height: 600px;
@@ -12,8 +13,10 @@ nav {
     top: 0px;
     display: flex;
     gap: 32px;
-    padding: 30px 40px;
-    background-color: #77aecf;
+    padding: 30px 20px;
+    justify-content: center;
+    background-color: #2450a3;
+    border-bottom: 1px solid #fff;
     font-size: 28px;
     height: 40px;
     width: 100vw;
@@ -21,14 +24,13 @@ nav {
 }
 
 nav > a{
-    color: #303030;
-    text-decoration: underline;
-    text-decoration-color: #3700ff;
+    color: #fff;
     cursor: pointer;
+    text-decoration: none;
 }
 
 body{
-    background-color: #183f8c;
+    background-color: #2450a3;
 }
 
 @media screen and (max-width: 768px) {
@@ -41,7 +43,6 @@ body{
 
 @media screen and (max-width: 500px) {
     nav {
-        justify-content: center;
         padding: 30px 0px;
         font-size: 18px;
     }
