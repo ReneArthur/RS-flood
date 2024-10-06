@@ -213,7 +213,16 @@
         }
 
         function prev() {
+<<<<<<< HEAD
             currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1; // Loop para o final
+=======
+            currentIndex -= 1;
+            if (currentIndex < 0) {
+                currentIndex = slides.length - 1;
+                render()
+                return
+            }
+>>>>>>> c2913daaecabafa1c820f6c9f5f005c7b9437531
             render();
         }
 
