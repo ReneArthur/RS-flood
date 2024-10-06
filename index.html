@@ -1,92 +1,107 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>title</title>
-    <meta http-equiv="imagetoolbar" content="no" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-    />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <style type="text/css">
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%;
-      }
-      body {
-        width: 100%;
-        height: 100%;
-        background: #ffffff;
-      }
-      #map {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-      }
-      #slider {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-      }
-    </style>
-    <link
-      rel="stylesheet"
-      href="https://cdn.maptiler.com/ol/v6.12.0/ol.css"
-      type="text/css"
-    />
-    <script
-      src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL,fetch,Function.prototype.bind,es5&flags=always,gated&unknown=polyfill"
-      type="text/javascript"
-    ></script>
-    <script
-      src="https://cdn.maptiler.com/ol/v6.12.0/ol.js"
-      type="text/javascript"
-    ></script>
-  </head>
-  <body>
-    <div id="map"></div>
-    
-    <script type="text/javascript">
-      var mapExtent = ol.proj.transformExtent(
-        [-54.439603, -30.619535, -50.56852, -28.183513],
-        "EPSG:4326",
-        "EPSG:3857"
-      );
-      var mapMinZoom = 6;
-      var mapMaxZoom = 11;
-      var layer = new ol.layer.Tile({
-        extent: mapExtent,
-        source: new ol.source.XYZ({
-          attributions:
-            '<a href="https://www.maptiler.com/engine/">Rendered with MapTiler Engine</a>, non-commercial use only',
-          url: "./title/{z}/{x}/{y}.png",
-          tilePixelRatio: 1.0,
-          minZoom: mapMinZoom,
-          maxZoom: mapMaxZoom,
-        }),
-      });
-      var mapLayer = new ol.layer.Tile({
-        source: new ol.source.OSM(),
-      });
-
-      var map = new ol.Map({
-        target: "map",
-        layers: [mapLayer, layer],
-        view: new ol.View({
-          center: ol.proj.fromLonLat([-52.504061, -29.401524]),
-          zoom: 7,
-        }),
-        zoomControl: false,
-        maxZoom: 15, // Limitar o zoom máximo para evitar problemas de performance
-        minZoom: 4,
-        preferCanvas: true,
-      }).fitBounds([
-        [-31.419074311900406, -54.833567160368965],
-        [-28.109094702803052, -49.56522405676841],
-      ]);
-    </script>
-  </body>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[-31.419074311900406,-54.833567160368965],[-28.109094702803052,-49.56522405676841]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // add class to format popup if it contains media
+		function addClassToPopupIfMedia(content, popup) {
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			if (tempDiv.querySelector('td img')) {
+				popup._contentNode.classList.add('media');
+					// Delay to force the redraw
+					setTimeout(function() {
+						popup.update();
+					}, 10);
+			} else {
+				popup._contentNode.classList.remove('media');
+			}
+		}
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OpenStreetMap_0');
+        map.getPane('pane_OpenStreetMap_0').style.zIndex = 400;
+        var layer_OpenStreetMap_0 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenStreetMap_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OpenStreetMap_0;
+        map.addLayer(layer_OpenStreetMap_0);
+        map.createPane('pane_OPERA_DSWx_HLS_2024050620240421_FloodMap_1');
+        map.getPane('pane_OPERA_DSWx_HLS_2024050620240421_FloodMap_1').style.zIndex = 401;
+        var img_OPERA_DSWx_HLS_2024050620240421_FloodMap_1 = 'data/OPERA_DSWx_HLS_2024050620240421_FloodMap_1.png';
+        var img_bounds_OPERA_DSWx_HLS_2024050620240421_FloodMap_1 = [[-30.61948031264475,-54.439602954274406],[-28.18351300383006,-50.56847360274768]];
+        var layer_OPERA_DSWx_HLS_2024050620240421_FloodMap_1 = new L.imageOverlay(img_OPERA_DSWx_HLS_2024050620240421_FloodMap_1,
+                                              img_bounds_OPERA_DSWx_HLS_2024050620240421_FloodMap_1,
+                                              {pane: 'pane_OPERA_DSWx_HLS_2024050620240421_FloodMap_1'});
+        bounds_group.addLayer(layer_OPERA_DSWx_HLS_2024050620240421_FloodMap_1);
+        map.addLayer(layer_OPERA_DSWx_HLS_2024050620240421_FloodMap_1);
+        setBounds();
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        </script>
+    </body>
 </html>
