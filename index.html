@@ -36,19 +36,19 @@
             display: flex;
             
             align-items: start;
-            transition: 250ms transform ease-out;
+            transition: 500ms transform ease-in-out;
         }
 
         .carousel-section {
             flex: 0 0 auto;
             width: 600px;
             border-radius: 24px;
-            
         }
         
 
         .carousel-section img {
             min-width: 300px;
+            height: 100%;
             max-width: 600px;
             position: absolute
         }
@@ -252,6 +252,7 @@
 
         function prev() {
             if (currentIndex < 0) return;
+            currentIndex = slides.length;
             currentIndex -= 1;
             render();
         }
