@@ -506,7 +506,10 @@ img {vertical-align: middle;}
 
             document.getElementById('optionsModal').classList.add('invisible')
             document.querySelector('#modal-title').classList.remove('invisible')
+            
+            const slides = document.querySelector('.slideshow-container').querySelectorAll('.mySlides');
 
+            slides.forEach(slide => {slide.remove()});
             map.setView([-30.0, -51.2], 10);
             toggleDrawer(true)
             document.querySelector('.modal-categories').classList.remove('invisible')
