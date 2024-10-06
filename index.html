@@ -251,9 +251,12 @@
         }
 
         function prev() {
-            if (currentIndex < 0) return;
-            currentIndex = slides.length;
             currentIndex -= 1;
+            if (currentIndex < 0) {
+                currentIndex = slides.length - 1;
+                render()
+                return
+            }
             render();
         }
 
