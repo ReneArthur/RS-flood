@@ -5,6 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css"/>
     <title>RS Flood</title>
+    <style>
+        main {
+            background-color: #06193d;
+            border-radius: 12px;
+            padding: 40px;
+            margin-top: 120px;
+            width: 90%;
+            margin-inline: auto;
+            position: relative;
+        }
+        .carousel {
+            margin: 16px auto;
+            display: flex;
+            width: 50%;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-sections-scroll {
+            flex: 1;
+            width: 50%;
+            overflow: hidden;
+        }
+
+        .carousel-sections {
+            height: 300px;
+            /* width: 50%; */
+            
+            display: flex;
+            align-items: center;
+            transition: 250ms transform ease-out;
+        }
+
+        .carousel-sections > div {
+            min-width: 100%;
+            height: 100%;
+            border-radius: 24px;
+        }
+
+        .prev-arrow,
+        .next-arrow {
+            z-index: 10;
+            position: relative;
+            height: 24px;
+            width: 24px;
+            margin: 0px 12px;
+            background-color: #34db88;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 150ms all ease-in;
+            -webkit-box-shadow: 0px 2px 5px 0px rgba(184, 184, 184, 1);
+            -moz-box-shadow: 0px 2px 5px 0px rgba(184, 184, 184, 1);
+            box-shadow: 0px 2px 5px 0px rgba(184, 184, 184, 1);
+        }
+        .prev-arrow:hover,
+        .next-arrow:hover {
+            -webkit-box-shadow: 0px 2px 13px 0px rgba(128, 128, 128, 1);
+            -moz-box-shadow: 0px 2px 13px 0px rgba(128, 128, 128, 1);
+            box-shadow: 0px 2px 13px 0px rgba(128, 128, 128, 1);
+        }
+
+        .prev-arrow:after,
+        .prev-arrow:before,
+        .next-arrow:after,
+        .next-arrow:before {
+            content: "";
+            height: 10px;
+            width: 2px;
+            border-radius: 10px;
+            position: absolute;
+            left: 10px;
+            background-color: #209158;
+        }
+        .next-arrow:after,
+        .next-arrow:before {
+            left: 12px;
+        }
+
+        .prev-arrow:after {
+            top: 4px;
+            transform: rotate(45deg);
+        }
+        .prev-arrow:before {
+            top: 10px;
+            transform: rotate(-45deg);
+        }
+
+        .next-arrow:after {
+            top: 4px;
+            transform: rotate(-45deg);
+        }
+
+        .next-arrow:before {
+            top: 10px;
+            transform: rotate(45deg);
+        }
+
+        .carousel-dots {
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            cursor: pointer;
+            border-radius: 8px;
+            background-color: #afafaf;
+            margin: 0px 4px;
+            transition: 100ms background-color ease-in;
+        }
+        .carousel-dot.active {
+            background-color: #5f5f5f;
+        }
+
+    </style>
 </head>
 <body>
     <nav>
@@ -13,5 +132,161 @@
         <a>Before and after</a>
         <a>Stories</a>
     </nav>
+
+    <main>
+        <div class="carousel">
+            <div class="prev-arrow"></div>
+    
+            <div class="carousel-sections-scroll">
+                    <div class="carousel-sections">
+                        <div
+                            class="carousel-section"
+                            style="background-color: #4c86a8;"
+                        >
+                            <img alt="Flooded airport" src="img/aeroporto.webp">
+                        </div>
+                        <div
+                            class="carousel-section"
+                            style="background-color: #542344;"
+                        >
+                            <img alt="Deceased cows in flood" src="img/animais.webp">
+                        </div>
+                        <div
+                            class="carousel-section"
+                            style="background-color: #2374ab;"
+                        >
+                            <img alt="A boat traveling on a flooded road" src="img/barco.webp">
+                        </div>
+                        <div
+                            class="carousel-section"
+                            style="background-color: #2374ab;"
+                        >
+                            <img alt="Firefighters in a lifeboat" src="img/bombeiros.webp">
+                        </div>
+                        <div
+                            class="carousel-section"
+                            style="background-color: #2374ab;"
+                        >
+                            <img alt="Army managing donations" src="img/doacoes.jpg">
+                        </div>
+                        <div
+                            class="carousel-section"
+                            style="background-color: #2374ab;"
+                        >
+                            <img alt="Man climbing the gate above the water" src="img/escalada.webp">
+                        </div>
+                        <div
+                            class="carousel-section"
+                            style="background-color: #2374ab;"
+                        >
+                            <img alt="Dog swimming" src="img/humaita.webp">
+                        </div>
+                        <div
+                            class="carousel-section"
+                            style="background-color: #2374ab;"
+                        >
+                            <img alt="Woman being examined in a temporary shelter" src="img/medicos.jpg">
+                        </div>
+                        <div
+                            class="carousel-section"
+                            style="background-color: #2374ab;"
+                        >
+                            <img alt="Estimated Floodwater Depth" src="img/profundidadeEstiada.jpg">
+                        </div>
+                        <div
+                            class="carousel-section"
+                            style="background-color: #2374ab;"
+                        >
+                            <img alt="Estimated Floodwater Depth" src="img/resgate.webp">
+                        </div>
+                        <div
+                            class="carousel-section"
+                            style="background-color: #2374ab;"
+                        >
+                            <img alt="Army saving a dog" src="img/resgateCachorro.jpg">
+                        </div>
+                    </div>
+            </div>
+    
+            <div class="next-arrow"></div>
+        </div>
+    
+        <div class="carousel-dots">
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+        </div>
+    </main>
+    
+    <script >
+    const prevBtn = document.querySelector("div.prev-arrow");
+    const nextBtn = document.querySelector("div.next-arrow");
+    const sectionContainer = document.querySelector("div.carousel-sections");
+
+    prevBtn.onclick = prev;
+    nextBtn.onclick = next;
+
+    let currentIndex = 0;
+    let slides = [];
+    let dots = [];
+
+    function render() {
+    let offset = 0;
+    slides.forEach((slide, index) => {
+        if (index < currentIndex) {
+        offset += slide.offsetWidth;
+        }
+    });
+
+    sectionContainer.style.transform = `translateX(-${offset}px)`;
+    dots.forEach((dot, index) => {
+        index === currentIndex
+        ? dot.classList.add("active")
+        : dot.classList.remove("active");
+    });
+    }
+
+    function prev() {
+    if (currentIndex < 0) return;
+    currentIndex -= 1;
+    render();
+    }
+
+    function next() {
+    if (currentIndex === slides.length - 1) return;
+    currentIndex += 1;
+    render();
+    }
+
+    function goto(newIndex) {
+    if (newIndex < 0 || newIndex > slides.length - 1) return;
+    currentIndex = newIndex;
+    render();
+    }
+
+    function init() {
+    const newSlides = document.querySelectorAll("div.carousel-sections > div");
+    slides = newSlides;
+
+    const newDots = document.querySelectorAll("div.carousel-dots > div");
+    newDots.forEach((dot, index) => {
+        dot.onclick = () => goto(index);
+    });
+    dots = newDots;
+
+    render();
+    }
+
+    init();
+
+    </script>
 </body>
 </html>
