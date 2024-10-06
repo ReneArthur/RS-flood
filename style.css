@@ -17,6 +17,7 @@ nav {
     font-size: 28px;
     height: 40px;
     width: 100vw;
+    z-index: 9999;
 }
 
 nav > a{
@@ -28,4 +29,20 @@ nav > a{
 
 body{
     background-color: #183f8c;
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        font-size: 20px;
+        height: 28px;
+        padding:30px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    nav {
+        justify-content: center;
+        padding: 30px 0px;
+        font-size: 18px;
+    }
 }

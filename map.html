@@ -8,68 +8,166 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMmtW5VnZ8TVY1d5J5D8A8gI5wK5y3Ut6WvX1b" crossorigin="anonymous">
     <style>
+   body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
 
-        main {
-            background-color: #06193d;
-            border-radius: 12px;
-            padding: 40px;
-            margin-top: 120px;
-            width: 90%;
-            margin-inline: auto;
-            position: relative;
+    main {
+        background-color: #06193d;
+        border-radius: 12px;
+        padding: 40px;
+        margin-top: 120px;
+        width: 90%;
+        margin-inline: auto;
+        position: relative;
+
+    }
+
+    #modal {
+        background-color: #06193d;
+        position: absolute;
+        left: 5%;
+        top: 8%;
+        width: 400px;
+        height: 550px;
+        z-index: 9999;
+        border-radius: 20px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    #modal > a {
+        width: 70%;
+        color: #fff;
+        text-decoration: underline;
+        text-align: center;
+        position: absolute;
+        right: 15%;
+        top: 10px;
+        font-size: 22px;
+    }
+
+    #modal .modal-categories {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px; 
+        margin-top: 60px;
+        padding: 0px 10px;
+    }
+
+    #modal .modal-categories > div {
+        background-color: #8687a2;
+        width: auto;
+        padding: 0px 20px;
+        border-radius: 20px;
+        font-size: 22px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .invisible {
+        display: none!important;
+    }
+
+    .backToCities {
+        position: absolute;
+        left: 20px;
+        top: 4px;
+        font-size: 30px; 
+        color: white; 
+        cursor: pointer; 
+    }
+
+    /* Mobile Styles */
+    @media screen and (max-width: 920px) {
+        #modal {
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 520px;
+            bottom: -300px;
+            border-radius: 20px 20px 0 0;
+            transform: translateY(-0px);
+            position: absolute;
         }
 
-        #modal {
-            background-color: #06193d;
-            position: absolute;
-            left: 5%;
-            top: 8%;
-            width: 400px;
-            height: 550px;
-            z-index: 9999;
-            border-radius: 20px;
+        #modal.open {
+            transform: translateY(-400px);
         }
 
         #modal > a {
-            width: 70%;
-            color: #fff;
-            text-decoration: underline;
-            text-align: center;
-            position: absolute;
-            right: 15%;
-            top: 10px;
-            font-size: 22px;
+            top: 20px;
+            font-size: 20px;
         }
 
         #modal .modal-categories {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px; 
-            margin-top: 60px;
-            padding: 0px 10px;
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: scroll;
+            margin-top: 20px;
+            scrollbar-width: thin;
+            padding: 10px;
         }
 
-        #modal .modal-categories > div {
-            background-color: #8687a2;
+        #modal .modal-categories >  div {
             width: auto;
-            padding: 0px 20px;
-            border-radius: 20px;
-            font-size: 22px;
-            text-align: center;
+            flex: 0 0 auto
+        }
+
+        #modal .drag-bar {
+            width: 60px;
+            height: 6px;
+            background-color: #fff;
+            border-radius: 3px;
+            margin: 10px auto;
             cursor: pointer;
         }
 
-        .invisible{
-            display: none!important;
+        main {
+            position: relative;
+            overflow: hidden;
+            margin-top: 120px;
+            padding: 0px;
+            width: 100%;
+        }
+        #modal-title{
+            margin-top: 5px;
+            font-size: 20px!important;
+        }
+        .modal-title--mobile{
+            display: none;
         }
         .backToCities {
-            position: absolute;
-            left: 20px;
-            top: 4px;
-            font-size: 30px; 
-            color: white; 
-            cursor: pointer; 
+            top: 20px;
         }
+        #modal .drag-bar {
+            width: 60px;
+            height: 6px;
+            background-color: #fff;
+            border-radius: 3px;
+            margin: 10px auto;
+            cursor: pointer;
+        }
+    }
+
+    @media screen and (max-width: 580px) {
+        #map{
+            height: 420px;
+        }
+
+        #modal{
+            top: 340px;
+        }
+
+        #modal .modal-categories{
+            padding: 0px 10px 16px;
+        }
+        #modal .modal-categories >  div {
+            font-size: 18px;
+            padding: 5px 20px;
+        }
+    }
     </style>
 </head>
 <body>
@@ -81,8 +179,9 @@
     </nav>
     <main>
         <div id="modal">
+            <div class="drag-bar invisible"></div>
             <span class="backToCities invisible" onclick="resetMarker();">&#8592;</span> 
-            <a id="modal-title">city</a>
+            <a id="modal-title" class="modal-title--mobile">city</a>
             <div class="modal-categories">
                 <div class="category-city">Porto Alegre</div>
                 <div class="category-city">Guaíba</div>
@@ -93,12 +192,10 @@
 
             <div class="modal-content invisible">
             </div>
-         
         </div>
         <div id="map">
         
         </div>
-
     </main>
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
     <script src="https://unpkg.com/georaster"></script>
@@ -140,14 +237,33 @@
             map.setView(cidade.coords, 12);
 
             document.getElementById('modal-title').innerHTML = cidade.nome;
+            document.getElementById('modal-title').style.display = "block!important";
             document.querySelector('.modal-categories').classList.add('invisible')
             document.querySelector('.backToCities').classList.remove('invisible')
-            document.querySelector('.modal-content').classList.remove('invisible')
+            document.getElementById('modal-title').classList.remove('modal-title--mobile')
+            document.querySelector('.drag-bar').classList.remove('invisible')
+            document.querySelector('.modal-content').classList.remove('invisible')            
         }
+
+        function toggleDrawer(toBack){
+            const modal = document.getElementById('modal');
+            if(modal.classList.contains('open') || toBack){
+                modal.classList.remove('open');
+            }else{
+                modal.classList.add('open');
+            }
+        }
+
+        document.querySelector('.drag-bar').addEventListener('click',()=>{
+            toggleDrawer(false)
+        })
 
         function resetMarker(){
             document.querySelector('.backToCities').classList.add('invisible')
+            document.querySelector('.drag-bar').classList.add('invisible')
+            document.getElementById('modal-title').classList.add('modal-title--mobile')
             map.setView([-30.0, -51.2], 10);
+            toggleDrawer(true)
             document.getElementById('modal-title').innerHTML = "city"
             document.querySelector('.modal-categories').classList.remove('invisible')
             document.querySelector('.modal-content').classList.add('invisible')
