@@ -11,7 +11,7 @@
             border-radius: 12px;
             padding: 40px;
             margin-top: 120px;
-            width: 90%;
+            width: clamp(300px, 90%, 960px);
             margin-inline: auto;
             position: relative;
         }
@@ -28,7 +28,9 @@
         }
 
         .twentytwenty-container img {
-            max-width: 720px;
+            max-width: 960px;
+            max-height: 480px;
+            object-fit: cover;
             position: absolute;
             top: 0;
             display: block;
@@ -42,7 +44,14 @@
             z-index: 10;
         }
 
+        .twentytwenty-horizontal {
+            max-width: 960px;
+            margin: 0px auto;
+            max-height: 480px;
+        }
+
         .twentytwenty-overlay {
+            max-width: 1080px;
             -webkit-transition-property: background;
             -moz-transition-property: background;
             transition-property: background;
@@ -51,6 +60,8 @@
         }
 
         .twentytwenty-container * {
+            display: flex;
+            justify-content: center;
             -webkit-box-sizing: content-box;
             -moz-box-sizing: content-box;
             box-sizing: content-box;
@@ -87,9 +98,7 @@
             box-shadow: 0px 0px 12px rgba(51, 51, 51, 0.5);
             z-index: 40;
             cursor: pointer;
-        }
-
-        
+        }        
 
         .twentytwenty-left-arrow, .twentytwenty-right-arrow {
             top: 50%;
@@ -171,8 +180,8 @@
                 <img src="img/Porto Alegre flood after.jpg" alt="Flooding in Southern Brazil after" style="width: 100%;" class="twentytwenty-after">
             <div class="twentytwenty-overlay"><div class="twentytwenty-before-label"></div><div class="twentytwenty-after-label"></div></div><div class="twentytwenty-handle" style="left: 157.5px;"><span class="twentytwenty-left-arrow"></span><span class="twentytwenty-right-arrow"></span></div></div>
         </div>
-        
     </main>
+
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.event.move.js"></script>
     <script type="text/javascript" src="js/jquery.twenty.twenty.js"></script>
