@@ -25,3 +25,7 @@ nav > a{
     text-decoration-color: #3700ff;
     cursor: pointer;
 }
+
+body{
+    background-color: #183f8c;
+}
