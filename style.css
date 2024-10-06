@@ -1,0 +1,25 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+#map {
+    height: 600px;
+    width: 80%;
+}
+nav {
+    position: fixed;
+    display: flex;
+    gap: 32px;
+    padding: 30px 40px;
+    background-color: #77aecf;
+    font-size: 28px;
+    height: 40px;
+    width: 100vw;
+}
+
+nav > a{
+    color: #303030;
+    text-decoration: underline;
+    text-decoration-color: #3700ff;
+    cursor: pointer;
+}
