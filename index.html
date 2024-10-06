@@ -14,123 +14,121 @@
             margin-inline: auto;
             position: relative;
         }
-        .carousel {
-            margin: 16px auto;
+
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
             display: flex;
-            max-width: 800px;
-            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .carousel-content {
+            display: flex;
+            animation: scroll 50s linear infinite;
+            cursor: grab;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item {
+            min-width: 800px;
+            height: 500px;
+            margin-right: 10px;
+            display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .carousel-sections-scroll {
-            flex: 1;
-            max-width: 600px;
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        section {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            place-items: center;
+            margin: 0px;
+            padding: 0px;
+            list-style-type: none;
+            opacity: 1;
+            mask-image: linear-gradient(
+                to right,
+                rgba(0, 0, 0, 0) 0%,
+                rgb(0, 0, 0) 12.5%,
+                rgb(0, 0, 0) 87.5%,
+                rgba(0, 0, 0, 0) 100%
+            );
             overflow: hidden;
         }
 
-        .carousel-sections {
-            height: 400px;
-            /* width: 50%; */
-            
-            display: flex;
-            
-            align-items: start;
-            transition: 500ms transform ease-in-out;
-        }
-
-        .carousel-section {
-            flex: 0 0 auto;
-            width: 600px;
-            border-radius: 24px;
-        }
-        
-
-        .carousel-section img {
-            min-width: 300px;
-            height: 100%;
-            max-width: 600px;
-            position: absolute
-        }
-
-        .prev-arrow,
-        .next-arrow {
-            z-index: 10;
-            position: relative;
-            height: 24px;
-            width: 24px;
-            margin: 0px 12px;
-            background-color: white;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 150ms all ease-in;
-            /* -webkit-box-shadow: 0px 2px 5px 0px rgba(184, 184, 184, 1);
-            -moz-box-shadow: 0px 2px 5px 0px rgba(184, 184, 184, 1); */
-            /* box-shadow: 0px 2px 5px 0px rgba(184, 184, 184, 1); */
-        }
-        .prev-arrow:hover,
-        .next-arrow:hover {
-            -webkit-box-shadow: 0px 2px 13px 0px rgba(128, 128, 128, 1);
-            -moz-box-shadow: 0px 2px 13px 0px rgba(128, 128, 128, 1);
-            /* box-shadow: 0px 2px 13px 0px rgba(128, 128, 128, 1); */
-        }
-
-        .prev-arrow:after,
-        .prev-arrow:before,
-        .next-arrow:after,
-        .next-arrow:before {
-            content: "";
-            height: 10px;
-            width: 2px;
-            border-radius: 10px;
-            position: absolute;
-            left: 10px;
-            background-color: #209158;
-        }
-        .next-arrow:after,
-        .next-arrow:before {
-            left: 12px;
-        }
-
-        .prev-arrow:after {
-            top: 4px;
-            transform: rotate(45deg);
-        }
-        .prev-arrow:before {
-            top: 10px;
-            transform: rotate(-45deg);
-        }
-
-        .next-arrow:after {
-            top: 4px;
-            transform: rotate(-45deg);
-        }
-
-        .next-arrow:before {
-            top: 10px;
-            transform: rotate(45deg);
-        }
-
         .carousel-dots {
-            margin-bottom: 24px;
             display: flex;
-            align-items: center;
             justify-content: center;
+            margin-top: 10px;
         }
 
         .carousel-dot {
-            width: 8px;
-            height: 8px;
+            height: 10px;
+            width: 10px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background-color: gray;
             cursor: pointer;
-            border-radius: 8px;
-            background-color: #afafaf;
-            margin: 0px 4px;
-            transition: 100ms background-color ease-in;
-        }
-        .carousel-dot.active {
-            background-color: #5f5f5f;
         }
 
+        .carousel-dot.active {
+            background-color: black;
+        }
+
+       
+
+        @media screen and (max-width: 720px) {
+            .carousel-item {
+                height: 400px;
+            }
+
+            .carousel-content {
+                animation: none;
+            }
+
+            .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 50%;
+            padding: 6px 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .carousel-button.prev {
+            left: 10px;
+        }
+
+        .carousel-button.next {
+            right: 10px;
+        }
+        }
     </style>
 </head>
 <body>
@@ -141,70 +139,44 @@
     </nav>
 
     <main>
-        <div class="carousel">
-            <div class="prev-arrow"></div>
-    
-            <div class="carousel-sections-scroll">
-                    <div class="carousel-sections">
-                        <div
-                            class="carousel-section"
-                        >
-                            <img alt="Flooded airport" src="img/aeroporto.webp">
-                        </div>
-                        <div
-                            class="carousel-section"
-                        >
-                            <img alt="Deceased cows in flood" src="img/animais.webp">
-                        </div>
-                        <div
-                            class="carousel-section"
-                        >
-                            <img alt="A boat traveling on a flooded road" src="img/barco.webp">
-                        </div>
-                        <div
-                            class="carousel-section"
-                        >
-                            <img alt="Firefighters in a lifeboat" src="img/bombeiros.webp">
-                        </div>
-                        <div
-                            class="carousel-section"
-                        >
-                            <img alt="Army managing donations" src="img/doacoes.jpg">
-                        </div>
-                        <div
-                            class="carousel-section"
-                        >
-                            <img alt="Man climbing the gate above the water" src="img/escalada.webp">
-                        </div>
-                        <div
-                            class="carousel-section"
-                        >
-                            <img alt="Dog swimming" src="img/humaita.webp">
-                        </div>
-                        <div
-                            class="carousel-section"
-                        >
-                            <img alt="Woman being examined in a temporary shelter" src="img/medicos.jpg">
-                        </div>
-                        <div
-                            class="carousel-section"
-                        >
-                            <img alt="Estimated Floodwater Depth" src="img/profundidadeEstiada.jpg">
-                        </div>
-                        <div
-                            class="carousel-section"
-                        >
-                            <img alt="Estimated Floodwater Depth" src="img/resgate.webp">
-                        </div>
-                        <div
-                            class="carousel-section"
-                        >
-                            <img alt="Army saving a dog" src="img/resgateCachorro.jpg">
-                        </div>
-                    </div>
+        <div class="carousel-container">
+            <button class="carousel-button prev">&lt;</button>
+            <div class="carousel-content">
+                <div class="carousel-item">
+                    <img alt="Flooded airport" src="img/aeroporto.webp">
+                </div>
+                <div class="carousel-item">
+                    <img alt="Deceased cows in flood" src="img/animais.webp">
+                </div>
+                <div class="carousel-item">
+                    <img alt="A boat traveling on a flooded road" src="img/barco.webp">
+                </div>
+                <div class="carousel-item">
+                    <img alt="Firefighters in a lifeboat" src="img/bombeiros.webp">
+                </div>
+                <div class="carousel-item">
+                    <img alt="Army managing donations" src="img/doacoes.jpg">
+                </div>
+                <div class="carousel-item">
+                    <img alt="Man climbing the gate above the water" src="img/escalada.webp">
+                </div>
+                <div class="carousel-item">
+                    <img alt="Dog swimming" src="img/humaita.webp">
+                </div>
+                <div class="carousel-item">
+                    <img alt="Woman being examined in a temporary shelter" src="img/medicos.jpg">
+                </div>
+                <div class="carousel-item">
+                    <img alt="Estimated Floodwater Depth" src="img/profundidadeEstiada.jpg">
+                </div>
+                <div class="carousel-item">
+                    <img alt="Rescue" src="img/resgate.webp">
+                </div>
+                <div class="carousel-item">
+                    <img alt="Army saving a dog" src="img/resgateCachorro.jpg">
+                </div>
             </div>
-    
-            <div class="next-arrow"></div>
+            <button class="carousel-button next">&gt;</button> 
         </div>
     
         <div class="carousel-dots">
@@ -222,74 +194,38 @@
         </div>
     </main>
     
-    <script >
-        const prevBtn = document.querySelector("div.prev-arrow");
-        const nextBtn = document.querySelector("div.next-arrow");
-        const sectionContainer = document.querySelector("div.carousel-sections");
-
-        prevBtn.onclick = prev;
-        nextBtn.onclick = next;
-
+    <script>
+        const carouselContent = document.querySelector('.carousel-content');
+        const slides = document.querySelectorAll('.carousel-item');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+        
         let currentIndex = 0;
-        let slides = [];
-        let dots = [];
 
         function render() {
-            let offset = 0;
-            slides.forEach((slide, index) => {
-                if (index < currentIndex) {
-                    offset += slide.offsetWidth;
-                }
-        });
+            const offset = -currentIndex * slides[0].offsetWidth; // Calcule o deslocamento baseado no índice atual
+            carouselContent.style.transform = `translateX(${offset}px)`;
 
-        sectionContainer.style.transform = `translateX(-${offset}px)`;
             dots.forEach((dot, index) => {
-                index === currentIndex
-                ? dot.classList.add("active")
-                : dot.classList.remove("active");
+                dot.classList.toggle('active', index === currentIndex);
             });
         }
 
         function prev() {
-            if (currentIndex < 0) return;
-            currentIndex = slides.length;
-            currentIndex -= 1;
+            currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1; // Loop para o final
             render();
         }
 
         function next() {
-            console.log(currentIndex)
-            if (currentIndex === slides.length - 1) {
-                currentIndex = 0
-                render()
-                return
-            };
-            currentIndex += 1;
-            
+            currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1; // Loop para o início
             render();
         }
 
-        function goto(newIndex) {
-            if (newIndex < 0 || newIndex > slides.length - 1) return;
-            currentIndex = newIndex;
-            render();
-        }
+        prevButton.addEventListener('click', prev);
+        nextButton.addEventListener('click', next);
 
-        function init() {
-            const newSlides = document.querySelectorAll("div.carousel-sections > div");
-            slides = newSlides;
-
-            const newDots = document.querySelectorAll("div.carousel-dots > div");
-            newDots.forEach((dot, index) => {
-                dot.onclick = () => goto(index);
-            });
-            dots = newDots;
-
-            render();
-        }
-
-        init();
-
+        render();
     </script>
 </body>
 </html>
