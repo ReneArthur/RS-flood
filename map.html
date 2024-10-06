@@ -25,45 +25,64 @@
     }
 
     #modal {
-        background-color: #06193d;
+        background-color: #f5f5f5;
+        box-shadow: 1px 1px 18px 6px #00000047;
         position: absolute;
         left: 5%;
         top: 8%;
         width: 400px;
         height: 550px;
-        z-index: 9999;
+        z-index: 999;
         border-radius: 20px;
         transition: transform 0.2s ease-in-out;
     }
 
+    #optionsModal {
+        position: absolute;
+        display: flex;
+        gap: 18px;
+        right: -70%;
+        top: 0%;
+        z-index: 999;
+    }
+    #optionsModal div {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background-color: #bebebe;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
     #modal > a {
         width: 70%;
-        color: #fff;
+        color: #000000;
         text-decoration: underline;
         text-align: center;
         position: absolute;
         right: 15%;
         top: 10px;
-        font-size: 22px;
+        font-size: 24px;
     }
 
     #modal .modal-categories {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
+        flex-direction: column;
         gap: 16px; 
         margin-top: 60px;
         padding: 0px 10px;
     }
 
     #modal .modal-categories > div {
-        background-color: #8687a2;
-        width: auto;
-        padding: 0px 20px;
+        display: flex;
+        gap: 4px;
+        background-color: #bdbdbd;
+        padding: 10px 20px;
         border-radius: 20px;
-        font-size: 22px;
+        font-size: 20px;
         text-align: center;
         cursor: pointer;
-        flex: 0 0 auto;
         white-space: nowrap;
     }
 
@@ -76,9 +95,21 @@
         left: 20px;
         top: 4px;
         font-size: 30px; 
-        color: white; 
+        color: #000; 
+        z-index: 999;
         cursor: pointer; 
+        padding: 0px 9px 5px;
+        border-radius: 20px;
+        background-color: #fff;
     }
+
+    .backToCities img {
+        width: 20px;
+    }
+
+    .modal-title--mobile{
+            display: none;
+        }
 
     @media screen and (max-width: 920px) {
         #modal {
@@ -103,16 +134,20 @@
 
         #modal .modal-categories {
             display: flex;
+            flex-direction: row;
             flex-wrap: nowrap;
             overflow-x: scroll;
             margin-top: 20px;
             scrollbar-width: thin;
-            padding: 10px;
         }
 
         #modal .modal-categories >  div {
             width: auto;
             flex: 0 0 auto
+        }
+
+        .backToCities {
+            background-color: none;
         }
 
         #modal .drag-bar {
@@ -132,19 +167,29 @@
             width: 100%;
         }
         #modal-title{
-            margin-top: 5px;
-            font-size: 20px!important;
-        }
-        .modal-title--mobile{
             display: none;
         }
-        .backToCities {
-            top: 20px;
+
+        #modal-title-mobile{
+            margin-top: 10px;
         }
+
+        .backToCities{
+            top: 16px!important;
+        }
+
+        .modal-content--images{
+            margin-top: 80px;
+        }
+
+        .modal-content--title{
+            display: none;
+        }
+
         #modal .drag-bar {
             width: 60px;
             height: 6px;
-            background-color: #fff;
+            background-color: #000;
             border-radius: 3px;
             margin: 10px auto;
             cursor: pointer;
@@ -160,6 +205,14 @@
             top: 370px;
         }
 
+        #modal-title-mobile{
+            font-size: 18px!important;
+        }
+
+        .backToCities{
+            top: 20px!important;
+        }
+
         #modal .modal-categories{
             padding: 0px 10px 16px;
         }
@@ -168,6 +221,86 @@
             padding: 5px 20px;
         }
     }
+
+    .mySlides {
+        display: none;
+        height: 250px;
+    }
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+.modal-content--title{
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.modal-content--title {
+    font-size: 24px;
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
     </style>
 </head>
 <body>
@@ -179,20 +312,61 @@
 
     <main>
         <div id="modal">
+            <div id="optionsModal" class="invisible">
+                <div><img src="./img/note-text-svgrepo-com.svg" style="width: 20px;height: 20px;">Stories</div>
+                <div><img src="./img/map-location-pin-svgrepo-com.svg" style="width: 20px;height: 20px;">Geography</div>
+            </div>
             <div class="drag-bar invisible"></div>
-            <span class="backToCities invisible" onclick="resetMarker();">&#8592;</span> 
-            <a id="modal-title" class="modal-title--mobile">city</a>
+            <span class="backToCities invisible" onclick="resetMarker();"><img src="./img/293664_chevron_left_icon.svg"></span> 
+            <a id="modal-title">city</a>
+            <a id="modal-title-mobile" class="invisible"></a>
             <div class="modal-categories">
-                <div class="category-city">Porto Alegre</div>
-                <div class="category-city">Guaíba</div>
-                <div class="category-city">Canoas</div>
-                <div class="category-city">Eldorado do sul</div>
-                <div class="category-city">São Leopoldo</div>
+                <div class="category-city">
+                    <span class="category-city--number">1.</span>
+                    <div>Porto Alegre</div>
+                </div>
+                <div class="category-city">
+                    <span class="category-city--number">2.</span>
+                    <div>Guaíba</div>
+                </div>
+                <div class="category-city">
+                    <span class="category-city--number">3.</span>
+                    <div>Canoas</div>
+                </div>
+                <div  class="category-city">
+                    <span class="category-city--number">4.</span>
+                    <div>Eldorado do sul</div>
+                </div>
+                <div class="category-city">
+                    <span class="category-city--number">4.</span>
+                    <div>São Leopoldo</div>
+                </div>
+                <div class="category-city">
+                    <span class="category-city--number">5.</span>
+                    <div>Caxias do sul</div>
+                </div>
             </div>
 
             <div class="modal-content invisible">
+                <div class="modal-content--images">
+                    <div class="slideshow-container">    
+                        <a class="prev" onclick="plusSlides(-1)">❮</a>
+                        <a class="next" onclick="plusSlides(1)">❯</a>
+                    
+                    </div>
+                        
+                    <div style="text-align:center">
+                        <span class="dot" onclick="currentSlide(1)"></span> 
+                        <span class="dot" onclick="currentSlide(2)"></span> 
+                        <span class="dot" onclick="currentSlide(3)"></span> 
+                    </div>
+                </div>
+              
+                <div class="modal-content--title"></div>
+                <div class="modal-content--body"></div>
             </div>
         </div>
+      
         <div id="map">
         
         </div>
@@ -203,8 +377,8 @@
     <script>
         var map = L.map('map', {
             maxBoundsViscosity: 1.0, 
-            // minZoom: 10, 
-            // maxZoom: 12 
+            minZoom: 10, 
+            maxZoom: 12 
         }).setView([-30.0, -51.2], 10); 
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -233,14 +407,60 @@
         });
         });
 
+        let slideIndex = 1;
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+        }
+
         function changeMarker(cidade){
+            document.querySelector('.modal-content--title').innerHTML = `${cidade.numb}. ${cidade.nome}`
+            const slideshowContainer = document.querySelector('.slideshow-container')
+            
+            const getCity= cidades.find((city)=>{
+                return city.nome === cidade.nome
+            })
+
+            document.getElementById('modal-title-mobile').innerHTML = `${cidade.numb}. ${cidade.nome}`
+
+            getCity.images.forEach((imageSrc) => {
+                const slideDiv = `
+                    <div class="mySlides fade">
+                    <img src="${imageSrc}" style="width:100%; height:100%">
+                    </div>
+                `;
+                slideshowContainer.insertAdjacentHTML('afterbegin', slideDiv);
+            });
+
+            showSlides(slideIndex);
+
             map.setView(cidade.coords, 12);
 
-            document.getElementById('modal-title').innerHTML = cidade.nome;
-            document.getElementById('modal-title').style.display = "block!important";
             document.querySelector('.modal-categories').classList.add('invisible')
+            document.querySelector('#modal-title').classList.add('invisible')
+            document.getElementById('modal-title-mobile').classList.remove('invisible')
             document.querySelector('.backToCities').classList.remove('invisible')
-            document.getElementById('modal-title').classList.remove('modal-title--mobile')
+            document.getElementById('optionsModal').classList.remove('invisible')
             document.querySelector('.drag-bar').classList.remove('invisible')
             document.querySelector('.modal-content').classList.remove('invisible')            
         }
@@ -261,20 +481,24 @@
         function resetMarker(){
             document.querySelector('.backToCities').classList.add('invisible')
             document.querySelector('.drag-bar').classList.add('invisible')
-            document.getElementById('modal-title').classList.add('modal-title--mobile')
+            document.getElementById('modal-title-mobile').classList.add('invisible')
+
+            document.getElementById('optionsModal').classList.add('invisible')
+            document.querySelector('#modal-title').classList.remove('invisible')
+
             map.setView([-30.0, -51.2], 10);
             toggleDrawer(true)
-            document.getElementById('modal-title').innerHTML = "city"
             document.querySelector('.modal-categories').classList.remove('invisible')
             document.querySelector('.modal-content').classList.add('invisible')
         }
 
         const cidades = [
-            { nome: "Porto Alegre", coords: [-30.0346, -51.2177] },
+            { numb:1, nome: "Porto Alegre", coords: [-30.0166, -51.2007], images:['./img/animais.webp', './img/barco.webp'],},
             { nome: "São Leopoldo", coords: [-29.8035, -51.1467] },
-            { nome: "Canoas", coords: [-29.9174, -51.1833] },
+            { nome: "Canoas", coords: [-29.9004, -51.1963] },
             { nome: "Eldorado do sul", coords: [-30.0000, -51.310] },
-            { nome: "Guaíba", coords: [-30.1138900, -51.3250000] },
+            { nome: "Guaíba", coords: [-30.09020, -51.3250000] },
+            { nome: "Caxias do sul", coords: [-29.1678, -51.1794] },
         ];
 
         const cityElements = document.querySelectorAll('.category-city');
@@ -282,7 +506,8 @@
         cityElements.forEach((element) => {
             element.addEventListener('click', (e) => {
                 const getCity = cidades.find((cidade) => {
-                    return cidade.nome == e.currentTarget.textContent;
+                    console.log(e.currentTarget)
+                    return cidade.nome == e.currentTarget.children[1].textContent;
                 });
                 changeMarker(getCity)
             });
