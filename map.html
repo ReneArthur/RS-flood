@@ -38,14 +38,20 @@
     }
 
     #optionsModal {
-        position: absolute;
+        position: relative;
         display: flex;
         gap: 18px;
-        right: -70%;
+        right: -110%;
         top: 0%;
         z-index: 999;
     }
+
     #optionsModal div {
+        display: flex;
+        gap: 18px;
+    }
+
+    #optionsModal div div{
         display: flex;
         align-items: center;
         gap: 4px;
@@ -143,7 +149,7 @@
             display: flex;
             gap: 18px;
             left: 0%;
-            top: -35%;
+            top: -8%;
             z-index: 999;
         }
 
@@ -165,12 +171,15 @@
             background-color: none;
         }
 
-        #modal .drag-bar {
+        #modal .drag-icon {
             width: 60px;
             height: 6px;
             background-color: #fff;
             border-radius: 3px;
             margin: 10px auto;
+        }
+
+        #modal .drag-bar {
             cursor: pointer;
         }
 
@@ -205,13 +214,20 @@
             display: none;
         }
 
-        #modal .drag-bar {
+        #modal .drag-icon {
             width: 60px;
             height: 6px;
             background-color: #000;
             border-radius: 3px;
             margin: 10px auto;
             cursor: pointer;
+        }
+
+        #modal .drag-bar {
+            cursor: pointer;
+            height: 40px;
+            display: flex;
+            align-items: center;
         }
     }
 
@@ -242,6 +258,8 @@
             font-size: 18px;
             padding: 5px 20px;
         }
+
+
     }
 
     .mySlides {
@@ -365,11 +383,16 @@ img {vertical-align: middle;}
 
     <main>
         <div id="modal">
-            <div id="optionsModal" class="invisible invisible-mobile">
-                <div id="histories"><img src="./img/note-text-svgrepo-com.svg" style="width: 20px;height: 20px;">Stories</div>
-                <div id="geography"><img src="./img/map-location-pin-svgrepo-com.svg" style="width: 20px;height: 20px;">Geography</div>
+            <div id="optionsModal">
+                <div id="staticModals">
+                    <div id="topography"><img src="./img/map-location-pin-svgrepo-com.svg" style="width: 20px;height: 20px;">Topography</div>
+                </div>
+                <div id="dynamicModals" class="invisible invisible-mobile">
+                    <div id="geography"><img src="./img/map-location-pin-svgrepo-com.svg" style="width: 20px;height: 20px;">Geography</div>
+                    <div id="histories"><img src="./img/note-text-svgrepo-com.svg" style="width: 20px;height: 20px;">Histories</div>
+                </div>
             </div>
-            <div class="drag-bar invisible"></div>
+            <div class="drag-bar invisible"><div class="drag-icon"></div></div>
             <span class="backToCities invisible" onclick="resetMarker();"><img src="./img/293664_chevron_left_icon.svg"></span> 
             <a id="modal-title">city</a>
             <a id="modal-title-mobile" class="invisible"></a>
@@ -437,17 +460,17 @@ img {vertical-align: middle;}
     <script src="https://unpkg.com/georaster"></script>
     <script src="https://unpkg.com/georaster-layer-for-leaflet/dist/georaster-layer-for-leaflet.min.js"></script>
     <script>
-        geographyEl = document.getElementById("geography")
-        geographyEl.onclick = () => {
+        topographyEl = document.getElementById("topography")
+        topographyEl.onclick = () => {
             if(map.hasLayer(topographyLayer)) {
                 map.removeLayer(topographyLayer)
-                geographyEl.style.background = "#bebebe"
+                topographyEl.style.background = "#bebebe"
                 document.querySelector(".label .topography").classList.add('invisible')
                 
             } else {
                 topographyLayer.addTo(map)
                 document.querySelector(".label .topography").classList.remove('invisible')
-                geographyEl.style.background = "white"
+                topographyEl.style.background = "white"
             }
         }
 
@@ -557,7 +580,7 @@ img {vertical-align: middle;}
             document.querySelector('#modal-title').classList.add('invisible')
             document.getElementById('modal-title-mobile').classList.remove('invisible')
             document.querySelector('.backToCities').classList.remove('invisible')
-            document.getElementById('optionsModal').classList.remove('invisible')
+            document.getElementById('dynamicModals').classList.remove('invisible')
             document.querySelector('.drag-bar').classList.remove('invisible')
             document.querySelector('.modal-content').classList.remove('invisible')            
         }
@@ -566,17 +589,17 @@ img {vertical-align: middle;}
             const modal = document.getElementById('modal');
             if(modal.classList.contains('open') || toBack){
                 modal.classList.remove('open');
-                    document.getElementById('optionsModal').classList.add('invisible-mobile')
+                    document.getElementById('dynamicModals').classList.add('invisible-mobile')
             }else{
                 setTimeout(()=>{
-                    document.getElementById('optionsModal').classList.remove('invisible-mobile')
+                    document.getElementById('dynamicModals').classList.remove('invisible-mobile')
                 },200)
 
                 modal.classList.add('open');
             }
         }
 
-        document.querySelector('.drag-bar').addEventListener('click',()=>{
+        document.querySelector('.drag-bar').addEventListener('mousedown',()=>{
             toggleDrawer(false)
         })
 
@@ -585,7 +608,7 @@ img {vertical-align: middle;}
             document.querySelector('.drag-bar').classList.add('invisible')
             document.getElementById('modal-title-mobile').classList.add('invisible')
 
-            document.getElementById('optionsModal').classList.add('invisible')
+            document.getElementById('dynamicModals').classList.add('invisible')
             document.querySelector('#modal-title').classList.remove('invisible')
             
             const slides = document.querySelector('.slideshow-container').querySelectorAll('.mySlides');
