@@ -69,8 +69,8 @@
     #modal .modal-categories {
         display: flex;
         flex-direction: column;
-        gap: 16px; 
-        margin-top: 60px;
+        gap: 12px;
+        margin-top: 45px;
         padding: 0px 10px;
     }
 
@@ -78,7 +78,7 @@
         display: flex;
         gap: 4px;
         background-color: #bdbdbd;
-        padding: 10px 20px;
+        padding: 8px 20px;
         border-radius: 20px;
         font-size: 20px;
         text-align: center;
@@ -376,19 +376,19 @@ img {vertical-align: middle;}
             <div class="modal-categories">
                 <div class="category-city">
                     <span class="category-city--number">1.</span>
-                    <div>Porto Alegre</div>
+                    <div>Caxias do Sul</div>
                 </div>
                 <div class="category-city">
                     <span class="category-city--number">2.</span>
-                    <div>Guaíba</div>
+                    <div>Roca Sales</div>
                 </div>
                 <div class="category-city">
                     <span class="category-city--number">3.</span>
-                    <div>Canoas</div>
+                    <div>Lajeado e Estrela</div>
                 </div>
-                <div  class="category-city">
+                <div class="category-city">
                     <span class="category-city--number">4.</span>
-                    <div>Eldorado do sul</div>
+                    <div>Montenegro</div>
                 </div>
                 <div class="category-city">
                     <span class="category-city--number">5.</span>
@@ -396,9 +396,26 @@ img {vertical-align: middle;}
                 </div>
                 <div class="category-city">
                     <span class="category-city--number">6.</span>
-                    <div>Caxias do sul</div>
+                    <div>Canoas</div>
+                </div>
+                <div class="category-city">
+                    <span class="category-city--number">7.</span>
+                    <div>Porto Alegre</div>
+                </div>
+                <div class="category-city">
+                    <span class="category-city--number">8.</span>
+                    <div>Eldorado do Sul</div>
+                </div>
+                <div class="category-city">
+                    <span class="category-city--number">9.</span>
+                    <div>Guaíba</div>
+                </div>
+                <div class="category-city">
+                    <span class="category-city--number">10.</span>
+                    <div>Rio Grande</div>
                 </div>
             </div>
+            
 
             <div class="modal-content invisible">
                 <div class="modal-content--images">
@@ -532,7 +549,10 @@ img {vertical-align: middle;}
 
         function changeMarker(cidade){
             document.querySelector('.modal-content--title').innerHTML = `${cidade.numb}. ${cidade.nome}`
+
+            // elementos do modal-content
             const slideshowContainer = document.querySelector('.slideshow-container')
+            const modalContent = document.querySelector('.modal-content--body')
             
             const getCity= cidades.find((city)=>{
                 return city.nome === cidade.nome
@@ -598,13 +618,125 @@ img {vertical-align: middle;}
         }
 
         const cidades = [
-            { numb:1, nome: "Porto Alegre", coords: [-30.0166, -51.2007], images:['./img/animais.webp', './img/barco.webp'],},
-            { numb:5, nome: "São Leopoldo", coords: [-29.8035, -51.1467], images:['./img/saoLeopoldoEnchente.webp'] },
-            { numb:3, nome: "Canoas", coords: [-29.9004, -51.1963], images:['./img/canoasEnchente.webp', './img/canoasEnchente2.webp'] },
-            { numb:4, nome: "Eldorado do sul", coords: [-30.0000, -51.310], images:['./img/eldoradoEnchente.webp'] },
-            { numb:2, nome: "Guaíba", coords: [-30.09020, -51.3250000], images: ['./img/guaibaEnchente.webp'] },
-            { numb:6, nome: "Caxias do sul", coords: [-29.1678, -51.1794], images:['./img/caxiasDeslizamento.webp'] },
+            {
+                numb: 7,
+                nome: "Porto Alegre",
+                coords: [-30.0166, -51.2007],
+                images: ['./img/animais.webp', './img/barco.webp'],
+                topics: [
+                    { label: "Altitude média", value: "26 m" },
+                    { label: "Altitude mínima", value: "-1 m" },
+                    { label: "Altitude máxima", value: "309 m" },
+                    { label: "Área Urbana", value: "214,9087 (Km²)" }
+                ]
+            },
+            {
+                numb: 5,
+                nome: "São Leopoldo",
+                coords: [-29.8035, -51.1467],
+                images: ['./img/saoLeopoldoEnchente.webp'],
+                topics: [
+                    { label: "Altitude média", value: "31 m" },
+                    { label: "Altitude mínima", value: "0 m" },
+                    { label: "Altitude máxima", value: "298 m" },
+                    { label: "Área Urbana", value: "49,9226 (Km²)" }
+                ]
+            },
+            {
+                numb: 6,
+                nome: "Canoas",
+                coords: [-29.9004, -51.1963],
+                images: ['./img/canoasEnchente.webp', './img/canoasEnchente2.webp'],
+                topics: [
+                    { label: "Altitude média", value: "12 m" },
+                    { label: "Altitude mínima", value: "-1 m" },
+                    { label: "Altitude máxima", value: "71 m" },
+                    { label: "Área Urbana", value: "74,4304 (Km²)" }
+                ]
+            },
+            {
+                numb: 8,
+                nome: "Eldorado do Sul",
+                coords: [-30.0000, -51.310],
+                images: ['./img/eldoradoEnchente.webp'],
+                topics: [
+                    { label: "Altitude média", value: "28 m" },
+                    { label: "Altitude mínima", value: "-1 m" },
+                    { label: "Altitude máxima", value: "308 m" },
+                    { label: "Área Urbana", value: "24,0114 (Km²)" }
+                ]
+            },
+            {
+                numb: 9,
+                nome: "Guaíba",
+                coords: [-30.09020, -51.3250000],
+                images: ['./img/guaibaEnchente.webp'],
+                topics: [
+                    { label: "Altitude média", value: "22 m" },
+                    { label: "Altitude mínima", value: "-1 m" },
+                    { label: "Altitude máxima", value: "264 m" },
+                    { label: "Área Urbana", value: "22,6015 (Km²)" }
+                ]
+            },
+            {
+                numb: 1,
+                nome: "Caxias do Sul",
+                coords: [-29.1678, -51.1794],
+                images: ['./img/caxiasDeslizamento.webp'],
+                topics: [
+                    { label: "Altitude média", value: "641 m" },
+                    { label: "Altitude mínima", value: "55 m" },
+                    { label: "Altitude máxima", value: "977 m" },
+                    { label: "Área Urbana", value: "104,7056 (Km²)" }
+                ]
+            },
+            {
+                numb: 2,
+                nome: "Roca Sales",
+                coords: [-29.2836, -51.8657],
+                images: [],
+                topics: [
+                    { label: "Altitude média", value: "254 m" },
+                    { label: "Altitude mínima", value: "25 m" },
+                    { label: "Altitude máxima", value: "608 m" },
+                    { label: "Área Urbana", value: "3,8368 (Km²)" }
+                ]
+            },
+            {
+                numb: 3,
+                nome: "Lajeado e Estrela",
+                coords: [-29.4597, -51.9644],
+                images: [],
+                topics: [
+                    { label: "Altitude média", value: "65 m" },
+                    { label: "Altitude mínima", value: "11 m" },
+                    { label: "Altitude máxima", value: "473 m" },
+                    { label: "Área Urbana", value: "36,0654 (Km²)" }
+                ]
+            },
+            {
+                numb: 4,
+                nome: "Montenegro",
+                coords: [-29.6828, -51.4678],
+                images: [],
+                topics: [
+                    { label: "Altitude média", value: "55 m" },
+                    { label: "Altitude mínima", value: "0 m" },
+                    { label: "Altitude máxima", value: "278 m" },
+                    { label: "Área Urbana", value: "24,4684 (Km²)" }
+                ]
+            },
+            {
+                numb: 10,
+                nome: "Rio Grande",
+                coords: [-32.0349, -52.1070],
+                images: [],
+                topics: [
+                    { label: "Área Urbana", value: "64,7847 (Km²)" }
+                ]
+            }
         ];
+
 
         const cityElements = document.querySelectorAll('.category-city');
         
