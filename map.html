@@ -614,7 +614,8 @@ img {vertical-align: middle;}
         let floodLayer;
         let topographyLayer;
 
-        fetch("./tiff/OPERA_DSWx_HLS_20240506-20240421_FloodMap.tif")
+        // fetch("./tiff/OPERA_DSWx_HLS_20240506-20240421_FloodMap.tif")
+        fetch("https://cgmmar.com.br/tiffs/OPERA_DSWx_HLS_20240506-20240421_FloodMap.tif")
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => {
             parseGeoraster(arrayBuffer).then(georaster => {
@@ -633,7 +634,8 @@ img {vertical-align: middle;}
             });
         });
 
-        fetch("./tiff/brazil south topography.tif")
+        // fetch("./tiff/brazil south topography.tif")
+        fetch("https://cgmmar.com.br/tiffs/brazil%20south%20topography.tif")
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => {
             parseGeoraster(arrayBuffer).then(georaster => {
