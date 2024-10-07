@@ -374,8 +374,8 @@ img {vertical-align: middle;}
         background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(255,255,255,1) 100%, rgba(0,212,255,1) 100%);
     }
 
-    .label .topography p {
-        
+    .activeOption {
+        background-color: #fff!important;
     }
 
     .link-title {
@@ -487,7 +487,12 @@ img {vertical-align: middle;}
     <script src="https://unpkg.com/georaster"></script>
     <script src="https://unpkg.com/georaster-layer-for-leaflet/dist/georaster-layer-for-leaflet.min.js"></script>
     <script>
+        let citySelected;
+
+        historiesEl = document.getElementById("histories")
+        geographyEl = document.getElementById("geography")
         topographyEl = document.getElementById("topography")
+
         topographyEl.onclick = () => {
             if(map.hasLayer(topographyLayer)) {
                 map.removeLayer(topographyLayer)
@@ -498,13 +503,77 @@ img {vertical-align: middle;}
                 topographyLayer.addTo(map)
                 document.querySelector(".label .topography").classList.remove('invisible')
                 topographyEl.style.background = "white"
+        
             }
         }
 
+        geographyEl.onclick = () => {
+            if(!geographyEl.classList.contains('activeOption')) {
+                geographyEl.classList.add('activeOption')
+                historiesEl.classList.remove('activeOption')
+
+                const modalContent = document.querySelector('.modal-content--body')
+
+                resetCarousel() 
+
+                modalContent.innerHTML = ""
+console.log(citySelected.imagesGeo)
+                citySelected.imagesGeo.forEach((imageSrc) => {
+                const slideDiv = `
+                    <div class="mySlides">
+                    <img src="${imageSrc}" style="width:100%; height:100%">
+                    </div>
+                `;
+                document.querySelector('.slideshow-container').insertAdjacentHTML('afterbegin', slideDiv);
+                });
+
+                showSlides(1);
+
+                let contentHtml = `<div style="padding: 25px;font-size: 16px;"><ul style="list-style:none">`;
+
+                    citySelected.topics.forEach(topic => {
+                    contentHtml += `<li style="margin-bottom:16px"><strong>${topic.label}:</strong> ${topic.value}</li>`;
+                });
+                contentHtml += '</div></ul>';
+
+                modalContent.innerHTML = contentHtml;
+            }
+        }
+
+
+        historiesEl.onclick = () => {
+            if(!historiesEl.classList.contains('activeOption')) {
+                historiesEl.classList.add('activeOption')
+                geographyEl.classList.remove('activeOption')
+
+                const modalContent = document.querySelector('.modal-content--body')
+
+                modalContent.innerHTML = ""
+
+                resetCarousel()
+
+                citySelected.images.forEach((imageSrc) => {
+                const slideDiv = `
+                    <div class="mySlides">
+                    <img src="${imageSrc}" style="width:100%; height:100%">
+                    </div>
+                `;
+                document.querySelector('.slideshow-container').insertAdjacentHTML('afterbegin', slideDiv);
+                });
+
+                showSlides(1);
+
+
+                // let contentHtml;
+
+                // modalContent.innerHTML = contentHtml;
+         
+            }
+        }
+
+
         var map = L.map('map', {
             maxBoundsViscosity: 1.0, 
-            minZoom: 10, 
-            maxZoom: 12 
         }).setView([-30.0, -51.2], 10); 
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -583,9 +652,7 @@ img {vertical-align: middle;}
         function changeMarker(cidade){
             document.querySelector('.modal-content--title').innerHTML = `${cidade.numb}. ${cidade.nome}`
 
-            // elementos do modal-content
             const slideshowContainer = document.querySelector('.slideshow-container')
-            const modalContent = document.querySelector('.modal-content--body')
             
             const getCity= cidades.find((city)=>{
                 return city.nome === cidade.nome
@@ -601,6 +668,8 @@ img {vertical-align: middle;}
                 `;
                 slideshowContainer.insertAdjacentHTML('afterbegin', slideDiv);
             });
+
+            citySelected = getCity
 
             showSlides(slideIndex);
 
@@ -632,6 +701,11 @@ img {vertical-align: middle;}
         document.querySelector('.drag-bar').addEventListener('mousedown',()=>{
             toggleDrawer(false)
         })
+        
+        function resetCarousel(){
+            const slides = document.querySelector('.slideshow-container').querySelectorAll('.mySlides');
+            slides.forEach(slide => {slide.remove()});
+        }
 
         function resetMarker(){
             document.querySelector('.backToCities').classList.add('invisible')
@@ -640,14 +714,16 @@ img {vertical-align: middle;}
 
             document.getElementById('dynamicModals').classList.add('invisible')
             document.querySelector('#modal-title').classList.remove('invisible')
-            
-            const slides = document.querySelector('.slideshow-container').querySelectorAll('.mySlides');
 
-            slides.forEach(slide => {slide.remove()});
+            resetCarousel()
+            document.querySelector('.modal-content--body').innerHTML=''
+            
+    
             map.setView([-30.0, -51.2], 10);
             toggleDrawer(true)
             document.querySelector('.modal-categories').classList.remove('invisible')
             document.querySelector('.modal-content').classList.add('invisible')
+            citySelected = null
         }
 
         const cidades = [
@@ -658,11 +734,12 @@ img {vertical-align: middle;}
                 images: ['./img/animais.webp', './img/barco.webp', './img/poaEnchente2.avif', './img/poaEnchente3.avif',
                         './img/poaEnchente4.avif', './img/poaEnchente5.png', './img/poaEnchente6.png', './img/poaEnchente7.png',
                 ],
+                imagesGeo: ['./img/poa.jpg'],
                 topics: [
-                    { label: "Altitude média", value: "26 m" },
-                    { label: "Altitude mínima", value: "-1 m" },
-                    { label: "Altitude máxima", value: "309 m" },
-                    { label: "Área Urbana", value: "214,9087 (Km²)" }
+                    { label: "Average altitude", value: "26 m" },
+                    { label: "Minimum altitude", value: "-1 m" },
+                    { label: "Máximum altitude", value: "309 m" },
+                    { label: "Urban Area", value: "214,9087 (Km²)" }
                 ]
             },
             {
@@ -670,11 +747,12 @@ img {vertical-align: middle;}
                 nome: "São Leopoldo",
                 coords: [-29.8035, -51.1467],
                 images: ['./img/saoLeopoldoEnchente.webp', './img/saoLeopoldoEnchente2.webp', './img/saoLeopoldoEnchente3.webp'],
+                imagesGeo: ['./img/saoleopoldo1.png'],
                 topics: [
-                    { label: "Altitude média", value: "31 m" },
-                    { label: "Altitude mínima", value: "0 m" },
-                    { label: "Altitude máxima", value: "298 m" },
-                    { label: "Área Urbana", value: "49,9226 (Km²)" }
+                    { label: "Average altitude", value: "31 m" },
+                    { label: "Minimum altitude", value: "0 m" },
+                    { label: "Máximum altitude", value: "298 m" },
+                    { label: "Urban Area", value: "49,9226 (Km²)" }
                 ]
             },
             {
@@ -682,11 +760,12 @@ img {vertical-align: middle;}
                 nome: "Canoas",
                 coords: [-29.9004, -51.1963],
                 images: ['./img/canoasEnchente.webp', './img/canoasEnchente2.webp', './img/canoasEnchente3.png', './img/canoasEnchente4.png'],
+                imagesGeo: ['./img/canoas.jpg'],
                 topics: [
-                    { label: "Altitude média", value: "12 m" },
-                    { label: "Altitude mínima", value: "-1 m" },
-                    { label: "Altitude máxima", value: "71 m" },
-                    { label: "Área Urbana", value: "74,4304 (Km²)" }
+                    { label: "Average altitude", value: "12 m" },
+                    { label: "Minimum altitude", value: "-1 m" },
+                    { label: "Máximum altitude", value: "71 m" },
+                    { label: "Urban Area", value: "74,4304 (Km²)" }
                 ]
             },
             {
@@ -694,11 +773,12 @@ img {vertical-align: middle;}
                 nome: "Eldorado do Sul",
                 coords: [-30.0000, -51.310],
                 images: ['./img/eldoradoEnchente.png', './img/eldoradoEnchente2.png', './img/eldoradoEnchente3.webp'],
+                imagesGeo: ['./img/eldorado.png'],
                 topics: [
-                    { label: "Altitude média", value: "28 m" },
-                    { label: "Altitude mínima", value: "-1 m" },
-                    { label: "Altitude máxima", value: "308 m" },
-                    { label: "Área Urbana", value: "24,0114 (Km²)" }
+                    { label: "Average altitude", value: "28 m" },
+                    { label: "Minimum altitude", value: "-1 m" },
+                    { label: "Máximum altitude", value: "308 m" },
+                    { label: "Urban Area", value: "24,0114 (Km²)" }
                 ]
             },
             {
@@ -706,11 +786,12 @@ img {vertical-align: middle;}
                 nome: "Guaíba",
                 coords: [-30.09020, -51.3250000],
                 images: ['./img/guaibaEnchente.webp'],
+                imagesGeo: ['./img/guaiba.jpg'],
                 topics: [
-                    { label: "Altitude média", value: "22 m" },
-                    { label: "Altitude mínima", value: "-1 m" },
-                    { label: "Altitude máxima", value: "264 m" },
-                    { label: "Área Urbana", value: "22,6015 (Km²)" }
+                    { label: "Average altitude", value: "22 m" },
+                    { label: "Minimum altitude", value: "-1 m" },
+                    { label: "Maximum altitude", value: "264 m" },
+                    { label: "Urban Area", value: "22,6015 (Km²)" }
                 ]
             },
             {
@@ -718,11 +799,12 @@ img {vertical-align: middle;}
                 nome: "Caxias do Sul",
                 coords: [-29.1678, -51.1794],
                 images: ['./img/caxiasDeslizamento.webp', './img/caxiasDeslizamento2.webp', './img/caxiasDeslizamento3.webp'],
+                imagesGeo: ['./img/caxias.png'],
                 topics: [
-                    { label: "Altitude média", value: "641 m" },
-                    { label: "Altitude mínima", value: "55 m" },
-                    { label: "Altitude máxima", value: "977 m" },
-                    { label: "Área Urbana", value: "104,7056 (Km²)" }
+                    { label: "Average altitude", value: "641 m" },
+                    { label: "Minimum altitude", value: "55 m" },
+                    { label: "Máximum altitude", value: "977 m" },
+                    { label: "Urban Area", value: "104,7056 (Km²)" }
                 ]
             },
             {
@@ -730,11 +812,12 @@ img {vertical-align: middle;}
                 nome: "Roca Sales",
                 coords: [-29.2836, -51.8657],
                 images: ["./img/rocasalesEnchente.webp", "./img/rocasalesEnchente2.webp", "./img/rocasalesEnchente3.webp"],
+                imagesGeo: ['./img/roca.jpg'],
                 topics: [
-                    { label: "Altitude média", value: "254 m" },
-                    { label: "Altitude mínima", value: "25 m" },
-                    { label: "Altitude máxima", value: "608 m" },
-                    { label: "Área Urbana", value: "3,8368 (Km²)" }
+                    { label: "Average altitude", value: "254 m" },
+                    { label: "Minimum altitude", value: "25 m" },
+                    { label: "Máximum altitude", value: "608 m" },
+                    { label: "Urban Area", value: "3,8368 (Km²)" }
                 ]
             },
             {
@@ -742,11 +825,12 @@ img {vertical-align: middle;}
                 nome: "Lajeado e Estrela",
                 coords: [-29.4597, -51.9644],
                 images: ['./img/lajeadoEstrela.jpg', './img/lajeadoEstrela2.jpg'],
+                imgessGeo:['./img/lajeado.png'],
                 topics: [
-                    { label: "Altitude média", value: "65 m" },
-                    { label: "Altitude mínima", value: "11 m" },
-                    { label: "Altitude máxima", value: "473 m" },
-                    { label: "Área Urbana", value: "36,0654 (Km²)" }
+                    { label: "Average altitude", value: "65 m" },
+                    { label: "Minimum altitude", value: "11 m" },
+                    { label: "Máximum altitude", value: "473 m" },
+                    { label: "Urban Area", value: "36,0654 (Km²)" }
                 ]
             },
             {
@@ -754,11 +838,12 @@ img {vertical-align: middle;}
                 nome: "Montenegro",
                 coords: [-29.6828, -51.4678],
                 images: ["./img/montenegroEnchente.webp", "./img/montenegroEnchente2.webp"],
+                imgessGeo:['./img/monte.jpg'],
                 topics: [
-                    { label: "Altitude média", value: "55 m" },
-                    { label: "Altitude mínima", value: "0 m" },
-                    { label: "Altitude máxima", value: "278 m" },
-                    { label: "Área Urbana", value: "24,4684 (Km²)" }
+                    { label: "Average altitude", value: "55 m" },
+                    { label: "Minimum altitude", value: "0 m" },
+                    { label: "Máximum altitude", value: "278 m" },
+                    { label: "Urban Area", value: "24,4684 (Km²)" }
                 ]
             },
             {
@@ -766,8 +851,9 @@ img {vertical-align: middle;}
                 nome: "Rio Grande",
                 coords: [-32.0349, -52.1070],
                 images: [],
+                imgessGeo: ['./img/riogrande.jpg'],
                 topics: [
-                    { label: "Área Urbana", value: "64,7847 (Km²)" }
+                    { label: "Urban Area", value: "64,7847 (Km²)" }
                 ]
             }
         ];
