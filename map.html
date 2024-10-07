@@ -24,6 +24,10 @@
 
     }
 
+    #map {
+        border-radius: 15px;
+    }
+
     #modal {
         background-color: #f5f5f5;
         box-shadow: 1px 1px 18px 6px #00000047;
@@ -58,12 +62,12 @@
     #modal > a {
         width: 70%;
         color: #000000;
-        text-decoration: underline;
         text-align: center;
         position: absolute;
         right: 15%;
         top: 10px;
         font-size: 24px;
+        border-radius: 15px;
     }
 
     #modal .modal-categories {
@@ -134,6 +138,7 @@
         }
 
         #modal > a {
+            text-decoration: none;
             top: 20px;
             font-size: 20px;
         }
@@ -182,6 +187,7 @@
             width: 100%;
         }
         #modal-title{
+            text-decoration: none;
             display: none;
         }
 
@@ -354,6 +360,10 @@ img {vertical-align: middle;}
         
     }
 
+    .link-title {
+        text-decoration: none;
+    }
+
     </style>
 </head>
 <body>
@@ -371,7 +381,7 @@ img {vertical-align: middle;}
             </div>
             <div class="drag-bar invisible"></div>
             <span class="backToCities invisible" onclick="resetMarker();"><img src="./img/293664_chevron_left_icon.svg"></span> 
-            <a id="modal-title">city</a>
+            <a id="modal-title" class="link-title">CITIES</a>
             <a id="modal-title-mobile" class="invisible"></a>
             <div class="modal-categories">
                 <div class="category-city">
@@ -694,7 +704,7 @@ img {vertical-align: middle;}
                 numb: 2,
                 nome: "Roca Sales",
                 coords: [-29.2836, -51.8657],
-                images: [],
+                images: ["./img/rocasalesEnchente.webp"],
                 topics: [
                     { label: "Altitude média", value: "254 m" },
                     { label: "Altitude mínima", value: "25 m" },
@@ -706,7 +716,7 @@ img {vertical-align: middle;}
                 numb: 3,
                 nome: "Lajeado e Estrela",
                 coords: [-29.4597, -51.9644],
-                images: [],
+                images: ['./img/lajeadoEstrela.jpg'],
                 topics: [
                     { label: "Altitude média", value: "65 m" },
                     { label: "Altitude mínima", value: "11 m" },
@@ -718,7 +728,7 @@ img {vertical-align: middle;}
                 numb: 4,
                 nome: "Montenegro",
                 coords: [-29.6828, -51.4678],
-                images: [],
+                images: ["./img/montenegroEnchente.webp"],
                 topics: [
                     { label: "Altitude média", value: "55 m" },
                     { label: "Altitude mínima", value: "0 m" },
