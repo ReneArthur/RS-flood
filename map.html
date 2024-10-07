@@ -377,6 +377,10 @@ img {vertical-align: middle;}
         display: inline;
     }
 
+    .modal-content{
+        scrollbar-width: thin;
+    }
+
     .label .topography div{
         width: 100px;
         height: 12px;
@@ -591,6 +595,8 @@ img {vertical-align: middle;}
                 document.querySelector('.slideshow-container').insertAdjacentHTML('afterbegin', slideDiv);
                 });
 
+                modalContent.innerHTML =`<div style="padding: 0px 20px;margin-top: 20px;">${citySelected.text}</div>`
+
                 showSlides(1, true);
             }
         }
@@ -678,6 +684,9 @@ img {vertical-align: middle;}
             });
 
             citySelected = getCity
+            
+            const modalContent = document.querySelector('.modal-content--body')
+            modalContent.innerHTML = `<div style="padding: 0px 20px;margin-top: 20px;">${cidade.text}</div>`;
 
             showSlides(slideIndex, true);
 
@@ -735,136 +744,135 @@ img {vertical-align: middle;}
         }
 
         const cidades = [
-            {
-                numb: 7,
-                nome: "Porto Alegre",
-                coords: [-30.0166, -51.2007],
-                images: ['./img/animais.webp', './img/barco.webp', './img/poaEnchente2.avif', './img/poaEnchente3.avif',
-                        './img/poaEnchente4.avif', './img/poaEnchente5.webp', './img/poaEnchente6.webp', './img/poaEnchente7.webp',
-                ],
-                imagesGeo: ['./img/poa.webp'],
-                topics: [
-                    { label: "Average altitude", value: "26 m" },
-                    { label: "Minimum altitude", value: "-1 m" },
-                    { label: "Máximum altitude", value: "309 m" },
-                    { label: "Urban Area", value: "214,9087 (Km²)" }
-                ]
-            },
-            {
-                numb: 5,
-                nome: "São Leopoldo",
-                coords: [-29.8035, -51.1467],
-                images: ['./img/saoLeopoldoEnchente.webp', './img/saoLeopoldoEnchente2.webp', './img/saoLeopoldoEnchente3.webp'],
-                imagesGeo: ['./img/saoleopoldo1.webp'],
-                topics: [
-                    { label: "Average altitude", value: "31 m" },
-                    { label: "Minimum altitude", value: "0 m" },
-                    { label: "Máximum altitude", value: "298 m" },
-                    { label: "Urban Area", value: "49,9226 (Km²)" }
-                ]
-            },
-            {
-                numb: 6,
-                nome: "Canoas",
-                coords: [-29.9004, -51.1963],
-                images: ['./img/canoasEnchente.webp', './img/canoasEnchente2.webp', './img/canoasEnchente3.webp', './img/canoasEnchente4.webp', "./img/canoasEnchente5.avif"],
-                imagesGeo: ['./img/canoas.webp'],
-                topics: [
-                    { label: "Average altitude", value: "12 m" },
-                    { label: "Minimum altitude", value: "-1 m" },
-                    { label: "Máximum altitude", value: "71 m" },
-                    { label: "Urban Area", value: "74,4304 (Km²)" }
-                ]
-            },
-            {
-                numb: 8,
-                nome: "Eldorado do Sul",
-                coords: [-30.0000, -51.310],
-                images: ['./img/eldoradoEnchente.webp', './img/eldoradoEnchente2.webp', './img/eldoradoEnchente3.webp'],
-                imagesGeo: ['./img/eldorado.webp'],
-                topics: [
-                    { label: "Average altitude", value: "28 m" },
-                    { label: "Minimum altitude", value: "-1 m" },
-                    { label: "Máximum altitude", value: "308 m" },
-                    { label: "Urban Area", value: "24,0114 (Km²)" }
-                ]
-            },
-            {
-                numb: 9,
-                nome: "Guaíba",
-                coords: [-30.09020, -51.3250000],
-                images: ['./img/guaibaEnchente.webp', './img/guaibaEnchente2.webp'],
-                imagesGeo: ['./img/guaiba.webp'],
-                topics: [
-                    { label: "Average altitude", value: "22 m" },
-                    { label: "Minimum altitude", value: "-1 m" },
-                    { label: "Maximum altitude", value: "264 m" },
-                    { label: "Urban Area", value: "22,6015 (Km²)" }
-                ]
-            },
-            {
-                numb: 1,
-                nome: "Caxias do Sul",
-                coords: [-29.1678, -51.1794],
-                images: ['./img/caxiasDeslizamento.webp', './img/caxiasDeslizamento2.webp', './img/caxiasDeslizamento3.webp'],
-                imagesGeo: ['./img/caxias.webp'],
-                topics: [
-                    { label: "Average altitude", value: "641 m" },
-                    { label: "Minimum altitude", value: "55 m" },
-                    { label: "Máximum altitude", value: "977 m" },
-                    { label: "Urban Area", value: "104,7056 (Km²)" }
-                ]
-            },
-            {
-                numb: 2,
-                nome: "Roca Sales",
-                coords: [-29.2836, -51.8657],
-                images: ["./img/rocasalesEnchente.webp", "./img/rocasalesEnchente2.webp", "./img/rocasalesEnchente3.webp"],
-                imagesGeo: ['./img/roca.webp'],
-                topics: [
-                    { label: "Average altitude", value: "254 m" },
-                    { label: "Minimum altitude", value: "25 m" },
-                    { label: "Máximum altitude", value: "608 m" },
-                    { label: "Urban Area", value: "3,8368 (Km²)" }
-                ]
-            },
-            {
-                numb: 3,
-                nome: "Lajeado e Estrela",
-                coords: [-29.4597, -51.9644],
-                images: ['./img/lajeadoEstrela.webp', './img/lajeadoEstrela2.webp'],
-                imagesGeo:['./img/lajeado.webp'],
-                topics: [
-                    { label: "Average altitude", value: "65 m" },
-                    { label: "Minimum altitude", value: "11 m" },
-                    { label: "Máximum altitude", value: "473 m" },
-                    { label: "Urban Area", value: "36,0654 (Km²)" }
-                ]
-            },
-            {
-                numb: 4,
-                nome: "Montenegro",
-                coords: [-29.6828, -51.4678],
-                images: ["./img/montenegroEnchente.webp", "./img/montenegroEnchente2.webp"],
-                imagesGeo:['./img/monte.webp'],
-                topics: [
-                    { label: "Average altitude", value: "55 m" },
-                    { label: "Minimum altitude", value: "0 m" },
-                    { label: "Máximum altitude", value: "278 m" },
-                    { label: "Urban Area", value: "24,4684 (Km²)" }
-                ]
-            },
-            {
-                numb: 10,
-                nome: "Rio Grande",
-                coords: [-32.0349, -52.1070],
-                images: ['./img/rioGrande1.jpeg', './img/rioGrande2.jpeg', './img/rioGrande3.jpeg'],
-                imagesGeo: ['./img/riogrande.webp'],
-                topics: [
-                    { label: "Urban Area", value: "64,7847 (Km²)" }
-                ]
-            }
-        ];
+    {
+        numb: 7,
+        nome: "Porto Alegre",
+        coords: [-30.0166, -51.2007],
+        images: ['./img/animais.webp', './img/barco.webp', './img/poaEnchente2.avif', './img/poaEnchente3.avif',
+                 './img/poaEnchente4.avif', './img/poaEnchente5.webp', './img/poaEnchente6.webp', './img/poaEnchente7.webp'],
+        imagesGeo: ['./img/poa.webp'],
+        topics: [
+            { label: "Average altitude", value: "26 m" },
+            { label: "Minimum altitude", value: "-1 m" },
+            { label: "Máximum altitude", value: "309 m" },
+            { label: "Urban Area", value: "214,9087 (Km²)" }
+        ],
+        text: "The state capital did not escape the force of the waters. During the 2024 floods, about 151,000 people were affected. The city saw the solidarity of its population manifest. The Civil Defense alone had more than 2,000 volunteers in its logistics center. The volunteer registration form, conducted by the government, received more than 10,000 responses. More than 5,000 donations were collected, and over 15 temporary shelters were set up."
+    },
+    {
+        numb: 5,
+        nome: "São Leopoldo",
+        coords: [-29.8035, -51.1467],
+        images: ['./img/saoLeopoldoEnchente.webp', './img/saoLeopoldoEnchente2.webp', './img/saoLeopoldoEnchente3.webp'],
+        imagesGeo: ['./img/saoleopoldo1.webp'],
+        topics: [
+            { label: "Average altitude", value: "31 m" },
+            { label: "Minimum altitude", value: "0 m" },
+            { label: "Máximum altitude", value: "298 m" },
+            { label: "Urban Area", value: "49,9226 (Km²)" }
+        ],
+        text: "Next, São Leopoldo, located on the banks of the Sinos River, also suffered greatly. With approximately 84,000 people affected during the floods, the city saw its community mobilize en masse. About 400 volunteers offered support on all fronts, from rescue to food distribution. More than 2,000 donations were collected, and 8 temporary shelters were set up."
+    },
+    {
+        numb: 6,
+        nome: "Canoas",
+        coords: [-29.9004, -51.1963],
+        images: ['./img/canoasEnchente.webp', './img/canoasEnchente2.webp', './img/canoasEnchente3.webp', './img/canoasEnchente4.webp', "./img/canoasEnchente5.avif"],
+        imagesGeo: ['./img/canoas.webp'],
+        topics: [
+            { label: "Average altitude", value: "12 m" },
+            { label: "Minimum altitude", value: "-1 m" },
+            { label: "Máximum altitude", value: "71 m" },
+            { label: "Urban Area", value: "74,4304 (Km²)" }
+        ],
+        text: "Canoas, situated just 20 meters above sea level and near the Guaíba basin, was one of the cities most affected by the 2024 floods. With 44% of the population impacted, the city’s response was remarkable. About 800 local volunteers came together to support emergency and recovery efforts, demonstrating a strong sense of solidarity and unity."
+    },
+    {
+        numb: 8,
+        nome: "Eldorado do Sul",
+        coords: [-30.0000, -51.310],
+        images: ['./img/eldoradoEnchente.webp', './img/eldoradoEnchente2.webp', './img/eldoradoEnchente3.webp'],
+        imagesGeo: ['./img/eldorado.webp'],
+        topics: [
+            { label: "Average altitude", value: "28 m" },
+            { label: "Minimum altitude", value: "-1 m" },
+            { label: "Máximum altitude", value: "308 m" },
+            { label: "Urban Area", value: "24,0114 (Km²)" }
+        ],
+        text: "Eldorado do Sul, with its low altitude of just 5 meters and located on the banks of Lake Guaíba, became especially vulnerable during the floods. The city was completely submerged and recorded 31,000 people affected. The community united, collecting more than 300 donations and establishing 2 temporary shelters. Solidarity networks also expanded beyond the city’s limits. Eldorado do Sul received support from neighboring cities and non-governmental organizations that sent supplies and volunteers to help with recovery."
+    },
+    {
+        numb: 9,
+        nome: "Guaíba",
+        coords: [-30.09020, -51.3250000],
+        images: ['./img/guaibaEnchente.webp', './img/guaibaEnchente2.webp'],
+        imagesGeo: ['./img/guaiba.webp'],
+        topics: [
+            { label: "Average altitude", value: "22 m" },
+            { label: "Minimum altitude", value: "-1 m" },
+            { label: "Maximum altitude", value: "264 m" },
+            { label: "Urban Area", value: "22,6015 (Km²)" }
+        ],
+        text: "Guaíba, also affected by low altitude and flat geography, saw its population suffer from the floods, which resulted in 21,000 people affected. The spirit of solidarity was present, with approximately 150 local volunteers mobilizing to offer support to families."
+    },
+    {
+        numb: 1,
+        nome: "Caxias do Sul",
+        coords: [-29.1678, -51.1794],
+        images: ['./img/caxiasDeslizamento.webp', './img/caxiasDeslizamento2.webp', './img/caxiasDeslizamento3.webp'],
+        imagesGeo: ['./img/caxias.webp'],
+        topics: [
+            { label: "Average altitude", value: "641 m" },
+            { label: "Minimum altitude", value: "55 m" },
+            { label: "Máximum altitude", value: "977 m" },
+            { label: "Urban Area", value: "104,7056 (Km²)" }
+        ],
+        text: "The heavy rains of 2024 exposed the vulnerability of several cities in the region, including Caxias do Sul, located in the Serra Gaúcha at about 641 meters above sea level. The mountainous geography caused rapid water runoff, severely affecting the city and neighboring areas. Caxias registered around 400 displaced people. The solidarity of the population was remarkable, with more than 1,000 donations of food and clothing, and 5 temporary shelters established to accommodate those affected."
+    },
+    {
+        numb: 2,
+        nome: "Roca Sales",
+        coords: [-29.2836, -51.8657],
+        images: ["./img/rocasalesEnchente.webp", "./img/rocasalesEnchente2.webp", "./img/rocasalesEnchente3.webp"],
+        imagesGeo: ['./img/roca.webp'],
+        topics: [
+            { label: "Average altitude", value: "254 m" },
+            { label: "Minimum altitude", value: "25 m" },
+            { label: "Máximum altitude", value: "608 m" },
+            { label: "Urban Area", value: "3,8368 (Km²)" }
+        ],
+        text: "Next, Roca Sales, situated along the Taquari River, faced the devastating effects of the 2024 floods. Located after a bend in the river, the city experienced a water buildup that resulted in one of the worst floods in its history. With around 500 displaced people and 36% of the population affected, the community mobilized impressively."
+    },
+    {
+        numb: 3,
+        nome: "Lajeado e Estrela",
+        coords: [-29.4597, -51.9644],
+        images: ['./img/lajeadoEstrela.webp', './img/lajeadoEstrela2.webp'],
+        imagesGeo:['./img/lajeado.webp'],
+        topics: [
+            { label: "Average altitude", value: "65 m" },
+            { label: "Minimum altitude", value: "11 m" },
+            { label: "Máximum altitude", value: "473 m" },
+            { label: "Urban Area", value: "36,0654 (Km²)" }
+        ],
+        text: "Nearby, Lajeado and Estrela, both crossed by the Taquari River, also suffered from the floods. Together, the cities accounted for about 35,000 people affected by the floods. The local population demonstrated a strong spirit of solidarity, with around 300 volunteers coming together to help affected families, distributing donations and providing assistance."
+    },
+    {
+        numb: 4,
+        nome: "Montenegro",
+        coords: [-29.6828, -51.4678],
+        images: ["./img/montenegroEnchente.webp", './img/montenegroEnchente2.webp'],
+        imagesGeo: ['./img/montenegro.webp'],
+        topics: [
+            { label: "Average altitude", value: "40 m" },
+            { label: "Minimum altitude", value: "2 m" },
+            { label: "Máximum altitude", value: "182 m" },
+            { label: "Urban Area", value: "81,1868 (Km²)" }
+        ],
+        text: "Montenegro, located in the Vale do Caí, saw its rivers overflow, affecting about 19,000 people during the floods. The city witnessed community mobilization, with local organizations coming together to collect and distribute more than 2,500 donations of food and clothing."
+    },
+];
+
 
 
         const cityElements = document.querySelectorAll('.category-city');
