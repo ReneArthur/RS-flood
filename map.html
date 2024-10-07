@@ -120,8 +120,13 @@
     }
 
     .modal-title--mobile{
-            display: none;
-        }
+        display: none;
+    }
+
+    .modal-content {
+        overflow-y: auto;
+        height: 500px;
+    }
 
     @media screen and (max-width: 920px) {
         main {
@@ -186,10 +191,6 @@
             margin: 10px auto;
         }
 
-        #modal .drag-bar {
-            cursor: pointer;
-        }
-
         main {
             position: relative;
             overflow: hidden;
@@ -214,9 +215,9 @@
             display: none!important;
         }
 
-        .modal-content--images{
+        /* .modal-content--images{
             margin-top: 80px;
-        }
+        } */
 
         .modal-content--title{
             display: none;
@@ -236,6 +237,13 @@
             height: 40px;
             display: flex;
             align-items: center;
+            cursor: pointer;
+            margin-bottom: 24px;
+        }
+
+        .modal-content {
+            overflow-y: scroll;
+            height: 400px;
         }
     }
 
@@ -490,10 +498,28 @@ img {vertical-align: middle;}
     <script src="https://unpkg.com/georaster-layer-for-leaflet/dist/georaster-layer-for-leaflet.min.js"></script>
     <script>
         let citySelected;
+        let slideIndex = 1;
 
         historiesEl = document.getElementById("histories")
         geographyEl = document.getElementById("geography")
         topographyEl = document.getElementById("topography")
+
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+        }
 
         topographyEl.onclick = () => {
             if(map.hasLayer(topographyLayer)) {
@@ -515,30 +541,29 @@ img {vertical-align: middle;}
                 historiesEl.classList.remove('activeOption')
 
                 const modalContent = document.querySelector('.modal-content--body')
-
                 resetCarousel() 
 
                 modalContent.innerHTML = ""
-console.log(citySelected.imagesGeo)
+
                 citySelected.imagesGeo.forEach((imageSrc) => {
                 const slideDiv = `
                     <div class="mySlides">
-                    <img src="${imageSrc}" style="width:100%; height:100%">
+                    <img loading="lazy" src="${imageSrc}" style="width:100%; height:100%">
                     </div>
                 `;
                 document.querySelector('.slideshow-container').insertAdjacentHTML('afterbegin', slideDiv);
                 });
-
+                
                 showSlides(1);
-
+                
                 let contentHtml = `<div style="padding: 25px;font-size: 16px;"><ul style="list-style:none">`;
-
+                    
                     citySelected.topics.forEach(topic => {
-                    contentHtml += `<li style="margin-bottom:16px"><strong>${topic.label}:</strong> ${topic.value}</li>`;
-                });
-                contentHtml += '</div></ul>';
-
-                modalContent.innerHTML = contentHtml;
+                        contentHtml += `<li style="margin-bottom:16px"><strong>${topic.label}:</strong> ${topic.value}</li>`;
+                    });
+                    contentHtml += '</div></ul>';
+                    
+                    modalContent.innerHTML = contentHtml;
             }
         }
 
@@ -548,27 +573,22 @@ console.log(citySelected.imagesGeo)
                 historiesEl.classList.add('activeOption')
                 geographyEl.classList.remove('activeOption')
 
+                resetCarousel()
                 const modalContent = document.querySelector('.modal-content--body')
 
                 modalContent.innerHTML = ""
 
-                resetCarousel()
 
                 citySelected.images.forEach((imageSrc) => {
                 const slideDiv = `
                     <div class="mySlides">
-                    <img src="${imageSrc}" style="width:100%; height:100%">
+                    <img loading="lazy" src="${imageSrc}" style="width:100%; height:100%">
                     </div>
                 `;
                 document.querySelector('.slideshow-container').insertAdjacentHTML('afterbegin', slideDiv);
                 });
 
                 showSlides(1);
-
-
-                // let contentHtml;
-
-                // modalContent.innerHTML = contentHtml;
          
             }
         }
@@ -624,9 +644,6 @@ console.log(citySelected.imagesGeo)
             });
         });
 
-        
-        let slideIndex = 1;
-
         function plusSlides(n) {
             showSlides(slideIndex += n);
         }
@@ -635,24 +652,11 @@ console.log(citySelected.imagesGeo)
             showSlides(slideIndex = n);
         }
 
-        function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("mySlides");
-            let dots = document.getElementsByClassName("dot");
-            if (n > slides.length) {slideIndex = 1}    
-            if (n < 1) {slideIndex = slides.length}
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";  
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex-1].style.display = "block";  
-            dots[slideIndex-1].className += " active";
-        }
-
         function changeMarker(cidade){
             document.querySelector('.modal-content--title').innerHTML = `${cidade.numb}. ${cidade.nome}`
+
+            geographyEl.classList.remove('activeOption')
+            historiesEl.classList.add('activeOption')
 
             const slideshowContainer = document.querySelector('.slideshow-container')
             
@@ -665,7 +669,7 @@ console.log(citySelected.imagesGeo)
             getCity.images.forEach((imageSrc) => {
                 const slideDiv = `
                     <div class="mySlides">
-                    <img src="${imageSrc}" style="width:100%; height:100%">
+                    <img loading="lazy" src="${imageSrc}" style="width:100%; height:100%">
                     </div>
                 `;
                 slideshowContainer.insertAdjacentHTML('afterbegin', slideDiv);
