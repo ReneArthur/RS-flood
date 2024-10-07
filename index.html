@@ -112,24 +112,56 @@
             }
 
             .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.7);
-            border: none;
-            border-radius: 50%;
-            padding: 6px 10px;
-            cursor: pointer;
-            z-index: 10;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: rgba(255, 255, 255, 0.7);
+                border: none;
+                border-radius: 50%;
+                padding: 6px 10px;
+                cursor: pointer;
+                z-index: 10;
+            }
+
+            .carousel-button.prev {
+                left: 10px;
+            }
+
+            .carousel-button.next {
+                right: 10px;
+            }
         }
 
-        .carousel-button.prev {
-            left: 10px;
+        .about-project-container {
+            
         }
 
-        .carousel-button.next {
-            right: 10px;
+        .inner-container {
+            display: flex;
+            background-color: #f5f5f5;
+            max-width: 960px;
+            flex-direction: column;
+            align-items: center;            
+            margin-top: 40px;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 800px;
+            margin-inline: auto;
         }
+
+        .community-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .community-paragraph {
+            text-align: justify;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -176,6 +208,19 @@
                 </div>
             </div>
             <button class="carousel-button next">&gt;</button> 
+        </div>
+
+        <div class="about-project-container">
+            <div class="inner-container">
+                <h2 class="community-title">About Our Community</h2>
+                <p class="community-paragraph">
+                    The heavy rains that began on April 27 in Caxias do Sul, in the Vales region, persisted for more than ten days without respite. This period of intense precipitation led to the overflow of the Taquari, Caí, Pardo, Jacuí, Sinos, and Gravataí river basins, causing widespread flooding in several cities. The water invaded urban and rural areas, causing significant material losses and, tragically, loss of human lives. After crossing the Serra and the Vales, the floods advanced towards the Metropolitan Region, severely affecting cities like Canoas and Porto Alegre. From there, the volume of water continued to flow southward, where municipalities such as São José do Norte, São Lourenço do Sul, Pelotas, and Rio Grande faced severe flooding, leaving thousands of people homeless and forcing mass evacuations.
+                </p>
+                
+                <p class="community-paragraph">
+                    During the 2024 floods in Rio Grande do Sul, it is estimated that more than 17,000 volunteers registered to help with emergency and recovery efforts. This number includes health professionals such as doctors, nurses, and psychologists, as well as many other volunteers who mobilized to provide support in various areas, experiencing a community movement never before seen in the entire state.
+                </p>
+            </div>
         </div>
     </main>
     
