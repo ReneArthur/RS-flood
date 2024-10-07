@@ -120,8 +120,13 @@
     }
 
     .modal-title--mobile{
-            display: none;
-        }
+        display: none;
+    }
+
+    .modal-content {
+        overflow-y: auto;
+        height: 500px;
+    }
 
     @media screen and (max-width: 920px) {
         main {
@@ -186,10 +191,6 @@
             margin: 10px auto;
         }
 
-        #modal .drag-bar {
-            cursor: pointer;
-        }
-
         main {
             position: relative;
             overflow: hidden;
@@ -214,9 +215,9 @@
             display: none!important;
         }
 
-        .modal-content--images{
+        /* .modal-content--images{
             margin-top: 80px;
-        }
+        } */
 
         .modal-content--title{
             display: none;
@@ -236,6 +237,13 @@
             height: 40px;
             display: flex;
             align-items: center;
+            cursor: pointer;
+            margin-bottom: 24px;
+        }
+
+        .modal-content {
+            overflow-y: scroll;
+            height: 400px;
         }
     }
 
