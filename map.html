@@ -505,7 +505,7 @@ img {vertical-align: middle;}
         topographyEl = document.getElementById("topography")
 
 
-        function showSlides(n) {
+        function showSlides(n, rollBack) {
             let i;
             let slides = document.getElementsByClassName("mySlides");
             let dots = document.getElementsByClassName("dot");
@@ -520,7 +520,7 @@ img {vertical-align: middle;}
             slides[slideIndex-1].style.display = "block";  
             dots[slideIndex-1].className += " active";
 
-            slideIndex = 1
+            if(rollBack) slideIndex = 1
         }
 
         topographyEl.onclick = () => {
@@ -544,7 +544,7 @@ img {vertical-align: middle;}
 
                 const modalContent = document.querySelector('.modal-content--body')
                 resetCarousel() 
-
+                slideIndex = 1
                 modalContent.innerHTML = ""
 
                 citySelected.imagesGeo.forEach((imageSrc) => {
@@ -566,7 +566,7 @@ img {vertical-align: middle;}
                 
                 modalContent.innerHTML = contentHtml;
 
-                showSlides(1);
+                showSlides(1, true);
             }
         }
 
@@ -591,7 +591,7 @@ img {vertical-align: middle;}
                 document.querySelector('.slideshow-container').insertAdjacentHTML('afterbegin', slideDiv);
                 });
 
-                showSlides(1);
+                showSlides(1, true);
             }
         }
 
@@ -647,11 +647,11 @@ img {vertical-align: middle;}
         });
 
         function plusSlides(n) {
-            showSlides(slideIndex += n);
+            showSlides(slideIndex += n, false);
         }
 
         function currentSlide(n) {
-            showSlides(slideIndex = n);
+            showSlides(slideIndex = n, false);
         }
 
         function changeMarker(cidade){
@@ -679,7 +679,7 @@ img {vertical-align: middle;}
 
             citySelected = getCity
 
-            showSlides(slideIndex);
+            showSlides(slideIndex, true);
 
             map.setView(cidade.coords, 12);
 
